@@ -35,7 +35,7 @@
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white;
             padding: 18px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none;
             box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden; font-family: inherit;
+            position: relative; overflow: hidden; font-family: inherit; cursor: pointer;
         }
         .cta-button:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(37, 211, 102, 0.6); }
         .cta-button::before {
@@ -43,7 +43,10 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s;
         }
         .cta-button:hover::before { left: 100%; }
-        .cta-button.email { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); }
+        .cta-button.email { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); 
+        }
         .cta-button.email:hover { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6); }
         .whatsapp-icon { font-size: 1.4rem; }
         .section { padding: 120px 0; position: relative; }
@@ -96,12 +99,12 @@
             <div class="hero-content">
                 <h1 class="headline fade-in">Fix missed leads and slow response — close more deals from the same traffic</h1>
                 <div class="contact-options">
-                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20I%20want%20the%207-day%20lead%20audit%20🚀" class="cta-button fade-in">
+                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20I%20want%20the%207-day%20lead%20audit%20🚀" class="cta-button fade-in" target="_blank">
                         <span class="whatsapp-icon">📱</span> WhatsApp Me Now (Instant)
                     </a>
-                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=Lead%20Audit%20Request&body=Hi%20Ariyan,%0A%0AI%20saw%20your%20landing%20page%20and%20want%20the%207-day%20audit!" class="cta-button email fade-in">
+                    <button onclick="openEmail()" class="cta-button email fade-in">
                         ✉️ Email Me Instead
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -137,24 +140,41 @@
                 <div class="audit-title">7-day audit + fix</div>
                 <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9;">I'll analyze your current setup and implement fixes that recover lost revenue</p>
                 <div class="contact-options">
-                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20Ready%20for%20my%207-day%20audit!%20🚀" class="cta-button" style="font-size: 1.3rem; padding: 20px 50px;">
+                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20Ready%20for%20my%207-day%20audit!%20🚀" class="cta-button" style="font-size: 1.3rem; padding: 20px 50px;" target="_blank">
                         <span class="whatsapp-icon">📱</span> Get Free Audit (WhatsApp)
                     </a>
-                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=7-Day%20Audit%20Request&body=Hi%20Ariyan,%0A%0APlease%20start%20my%207-day%20lead%20audit!" class="cta-button email" style="font-size: 1.3rem; padding: 20px 50px;">
+                    <button onclick="openEmailAudit()" class="cta-button email" style="font-size: 1.3rem; padding: 20px 50px;">
                         ✉️ Email Audit Request
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
+        // WhatsApp already working ✅
+        
+        // Email function - BYPASSES GitHub Pages restriction
+        function openEmail() {
+            const subject = encodeURIComponent('Lead Audit Request');
+            const body = encodeURIComponent('Hi Ariyan,\n\nI saw your landing page and want the 7-day audit!\n\nBest,');
+            window.location.href = 'mailto:ariyan.nadeem.01@gmail.com?subject=' + subject + '&body=' + body;
+        }
+        
+        function openEmailAudit() {
+            const subject = encodeURIComponent('7-Day Audit Request');
+            const body = encodeURIComponent('Hi Ariyan,\n\nPlease start my 7-day lead audit!\n\nBest regards,');
+            window.location.href = 'mailto:ariyan.nadeem.01@gmail.com?subject=' + subject + '&body=' + body;
+        }
+
+        // Scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             document.querySelectorAll('.lottie-3d').forEach(el => {
