@@ -31,17 +31,21 @@
             background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .cta-button {
-            display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white;
             padding: 18px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none;
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden; font-family: inherit;
         }
-        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6); }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(37, 211, 102, 0.6); }
         .cta-button::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s;
         }
         .cta-button:hover::before { left: 100%; }
+        .cta-button.email { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); }
+        .cta-button.email:hover { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6); }
+        .whatsapp-icon { font-size: 1.4rem; }
         .section { padding: 120px 0; position: relative; }
         .section-1 { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
@@ -80,6 +84,7 @@
         @media (max-width: 768px) { .hero { padding: 100px 0; min-height: auto; } .headline { text-align: center; } .section { padding: 80px 0; } }
         .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .contact-options { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 40px auto 0; }
     </style>
 </head>
 <body>
@@ -90,7 +95,14 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="headline fade-in">Fix missed leads and slow response — close more deals from the same traffic</h1>
-                <a href="mailto:ariyan.nadeem.01@gmail.com?subject=Lead%20Audit%20Request" class="cta-button fade-in">👉 Message me: I'll show you where you're losing money</a>
+                <div class="contact-options">
+                    <a href="https://wa.me/923333xxxxxx?text=Hi%20Ariyan!%20I%20want%20the%207-day%20lead%20audit" class="cta-button fade-in">
+                        <span class="whatsapp-icon">📱</span> WhatsApp Me Now (Instant)
+                    </a>
+                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=Lead%20Audit%20Request&body=Hi%20Ariyan,%0A%0AI%20saw%20your%20landing%20page%20and%20want%20the%207-day%20audit!" class="cta-button email fade-in">
+                        ✉️ Email Me Instead
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -124,7 +136,14 @@
             <div class="audit-box">
                 <div class="audit-title">7-day audit + fix</div>
                 <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9;">I'll analyze your current setup and implement fixes that recover lost revenue</p>
-                <a href="mailto:ariyan.nadeem.01@gmail.com?subject=7-Day%20Audit%20Request" class="cta-button" style="font-size: 1.3rem; padding: 20px 50px;">Start Your Audit → Free</a>
+                <div class="contact-options">
+                    <a href="https://wa.me/923333xxxxxx?text=Hi%20Ariyan!%20Ready%20for%20my%207-day%20audit!" class="cta-button" style="font-size: 1.3rem; padding: 20px 50px;">
+                        <span class="whatsapp-icon">📱</span> Get Free Audit (WhatsApp)
+                    </a>
+                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=7-Day%20Audit%20Request&body=Hi%20Ariyan,%0A%0APlease%20start%20my%207-day%20lead%20audit!" class="cta-button email" style="font-size: 1.3rem; padding: 20px 50px;">
+                        ✉️ Email Audit Request
+                    </a>
+                </div>
             </div>
         </div>
     </section>
