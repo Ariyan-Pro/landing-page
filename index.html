@@ -14,8 +14,105 @@
             color: white; 
             overflow-x: hidden; 
             min-height: 100vh;
+            scroll-behavior: smooth;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Glassmorphism Base Classes */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .glass-premium {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+        .glass-premium:hover::before {
+            left: 100%;
+        }
+        
+        /* Neo-Brutalism Accents */
+        .neo-brutal {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .neo-brutal:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 12px 12px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Skeuomorphic Touches */
+        .skeuo-button {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.15) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Bento Grid Animation */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+        .bento-item {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #ff6b6b);
+            z-index: 1000;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+        }
+        
         .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
         .hero::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -29,15 +126,23 @@
         .headline { 
             font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            text-shadow: 0 0 80px rgba(168, 184, 255, 0.3);
         }
         .cta-button {
             display: inline-flex; align-items: center; gap: 12px;
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white;
             padding: 18px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-decoration: none;
-            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative; overflow: hidden; font-family: inherit; cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(37, 211, 102, 0.6); }
+        .cta-button:hover { 
+            transform: translateY(-5px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(37, 211, 102, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
         .cta-button::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s;
@@ -45,52 +150,276 @@
         .cta-button:hover::before { left: 100%; }
         .cta-button.email { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); 
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .cta-button.email:hover { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6); }
+        .cta-button.email:hover { 
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
         .whatsapp-icon { font-size: 1.4rem; }
         .section { padding: 120px 0; position: relative; }
-        .section-1 { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
+        .section-1 { 
+            background: transparent;
+            position: relative;
+        }
+        .section-1::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(102, 126, 234, 0.1) 0%, 
+                transparent 70%);
+            pointer-events: none;
+        }
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 40px; 
+            margin-top: 60px;
+        }
         .stat-card {
-            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px); transform: translateY(20px); opacity: 0; animation: cardSlideUp 0.8s ease-out forwards;
+            background: rgba(255,255,255,0.08);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(40px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes cardSlideUp { to { transform: translateY(0); opacity: 1; } }
-        .stat-number { font-size: 4rem; font-weight: 800; background: linear-gradient(135deg, #ff6b6b, #feca57); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; }
-        .section-2 { background: rgba(0,0,0,0.2); }
-        .problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 60px; }
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .stat-card:nth-child(1) { transition-delay: 0.1s; }
+        .stat-card:nth-child(2) { transition-delay: 0.2s; }
+        .stat-card:nth-child(3) { transition-delay: 0.3s; }
+        .stat-card.visible { transform: translateY(0); opacity: 1; }
+        .stat-number { 
+            font-size: 4rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #ff6b6b, #feca57); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+            display: block;
+            text-shadow: 0 0 40px rgba(254, 202, 87, 0.3);
+        }
+        .section-2 { 
+            background: transparent;
+            position: relative;
+        }
+        .section-2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(118, 75, 162, 0.1) 0%, 
+                transparent 70%);
+            pointer-events: none;
+        }
+        .problems-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 24px; 
+            margin-top: 60px;
+        }
         .problem-item {
-            display: flex; align-items: center; gap: 20px; padding: 24px; background: rgba(255,255,255,0.05);
-            border-radius: 16px; border-left: 4px solid #667eea; transform: translateX(-20px); opacity: 0;
-            animation: slideInLeft 0.6s ease-out forwards;
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            padding: 24px; 
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px; 
+            border-left: 4px solid #667eea;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            transform: translateX(-40px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .problem-item:nth-child(1) { animation-delay: 0.1s; }
-        .problem-item:nth-child(2) { animation-delay: 0.2s; }
-        .problem-item:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes slideInLeft { to { transform: translateX(0); opacity: 1; } }
-        .problem-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .problem-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .problem-item:hover::before {
+            opacity: 1;
+        }
+        .problem-item:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        .problem-item:nth-child(1) { transition-delay: 0.1s; }
+        .problem-item:nth-child(2) { transition-delay: 0.2s; }
+        .problem-item:nth-child(3) { transition-delay: 0.3s; }
+        .problem-item.visible { transform: translateX(0); opacity: 1; }
+        .problem-icon { 
+            width: 48px; 
+            height: 48px; 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .section-3 { text-align: center; }
         .audit-box {
-            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2)); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 80px 40px; max-width: 600px;
-            margin: 60px auto 0; transform: scale(0.9); opacity: 0; animation: scaleIn 0.8s ease-out 0.5s forwards;
+            background: linear-gradient(135deg, 
+                rgba(102,126,234,0.25), 
+                rgba(118,75,162,0.25)); 
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255,255,255,0.2); 
+            border-radius: 24px; 
+            padding: 80px 40px; 
+            max-width: 600px;
+            margin: 60px auto 0; 
+            transform: scale(0.9); 
+            opacity: 0; 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes scaleIn { to { transform: scale(1); opacity: 1; } }
-        .audit-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .audit-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.08) 0%, 
+                transparent 70%);
+            animation: rotateGlow 15s linear infinite;
+        }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .audit-box.visible { transform: scale(1); opacity: 1; }
+        .audit-title { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 20px; 
+            background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(168, 184, 255, 0.4);
+            position: relative;
+            z-index: 1;
+        }
         .lottie-3d { position: absolute; width: 300px; height: 300px; opacity: 0.1; z-index: 0; }
         .lottie-3d.left { top: 20%; left: -10%; }
         .lottie-3d.right { bottom: 20%; right: -10%; }
-        @media (max-width: 768px) { .hero { padding: 100px 0; min-height: auto; } .headline { text-align: center; } .section { padding: 80px 0; } }
-        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .contact-options { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 40px auto 0; }
+        @media (max-width: 768px) { 
+            .hero { padding: 100px 0; min-height: auto; } 
+            .headline { text-align: center; } 
+            .section { padding: 80px 0; } 
+        }
+        .fade-in { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .fade-in.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .contact-options { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            max-width: 400px; 
+            margin: 40px auto 0; 
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Parallax floating elements */
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: floatOrb 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .orb-1 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.6), transparent);
+            top: 10%; right: -100px;
+        }
+        .orb-2 {
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.6), transparent);
+            bottom: 20%; left: -100px;
+            animation-delay: -5s;
+        }
+        .orb-3 {
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.4), transparent);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+        }
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 30px) scale(1.05); }
+        }
+        
+        /* Smooth reveal on scroll */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+    
     <lottie-player class="lottie-3d left" src="https://assets4.lottiefiles.com/packages/lf20_tss3upjt.json" background="transparent" speed="0.5" loop autoplay></lottie-player>
     <lottie-player class="lottie-3d right" src="https://assets1.lottiefiles.com/packages/lf20_yf3kcmhw.json" background="transparent" speed="0.3" loop autoplay></lottie-player>
 
@@ -99,10 +428,10 @@
             <div class="hero-content">
                 <h1 class="headline fade-in">Fix missed leads and slow response — close more deals from the same traffic</h1>
                 <div class="contact-options">
-                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20I%20want%20the%207-day%20lead%20audit%20🚀" class="cta-button fade-in" target="_blank">
+                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20I%20want%20the%207-day%20lead%20audit%20🚀" class="cta-button fade-in glass-premium" target="_blank">
                         <span class="whatsapp-icon">📱</span> WhatsApp Me Now (Instant)
                     </a>
-                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=Lead%20Audit%20Request&body=Hi%20Ariyan,%0A%0AI%20saw%20your%20landing%20page%20and%20want%20the%207-day%20audit!%0A%0ABest," class="cta-button email fade-in">
+                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=Lead%20Audit%20Request&body=Hi%20Ariyan,%0A%0AI%20saw%20your%20landing%20page%20and%20want%20the%207-day%20audit!%0A%0ABest," class="cta-button email fade-in glass-premium">
                         ✉️ Email Me Instead
                     </a>
                 </div>
@@ -110,40 +439,40 @@
         </div>
     </section>
 
-    <section class="section section-1">
+    <section class="section section-1 reveal-section">
         <div class="container">
             <h2 style="font-size: 2.5rem; text-align: center; font-weight: 700; margin-bottom: 20px;">
                 Most businesses lose <span style="background: linear-gradient(135deg, #ff6b6b, #feca57); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">30–70%</span> of leads due to slow or no response
             </h2>
-            <div class="stats-grid">
-                <div class="stat-card"><span class="stat-number">30-70%</span><h3>Leads Lost</h3><p>Due to response delays > 5 minutes</p></div>
-                <div class="stat-card"><span class="stat-number">400%</span><h3>Conversion Boost</h3><p>Responding in first 5 minutes</p></div>
-                <div class="stat-card"><span class="stat-number">21x</span><h3>More Likely</h3><p>To qualify when contacted immediately</p></div>
+            <div class="stats-grid bento-grid">
+                <div class="stat-card bento-item"><span class="stat-number">30-70%</span><h3>Leads Lost</h3><p>Due to response delays > 5 minutes</p></div>
+                <div class="stat-card bento-item"><span class="stat-number">400%</span><h3>Conversion Boost</h3><p>Responding in first 5 minutes</p></div>
+                <div class="stat-card bento-item"><span class="stat-number">21x</span><h3>More Likely</h3><p>To qualify when contacted immediately</p></div>
             </div>
         </div>
     </section>
 
-    <section class="section section-2">
+    <section class="section section-2 reveal-section">
         <div class="container">
             <h2 style="font-size: 2.5rem; text-align: center; font-weight: 700; margin-bottom: 40px;">I fix:</h2>
-            <div class="problems-grid">
-                <div class="problem-item"><div class="problem-icon">⏰</div><div><h3>Delayed replies</h3><p>Automation responds instantly 24/7</p></div></div>
-                <div class="problem-item"><div class="problem-icon">📧</div><div><h3>No follow-ups</h3><p>Smart sequences nurture every lead</p></div></div>
-                <div class="problem-item"><div class="problem-icon">❓</div><div><h3>Lost inquiries</h3><p>Every message captured + tracked</p></div></div>
+            <div class="problems-grid bento-grid">
+                <div class="problem-item bento-item"><div class="problem-icon">⏰</div><div><h3>Delayed replies</h3><p>Automation responds instantly 24/7</p></div></div>
+                <div class="problem-item bento-item"><div class="problem-icon">📧</div><div><h3>No follow-ups</h3><p>Smart sequences nurture every lead</p></div></div>
+                <div class="problem-item bento-item"><div class="problem-icon">❓</div><div><h3>Lost inquiries</h3><p>Every message captured + tracked</p></div></div>
             </div>
         </div>
     </section>
 
-    <section class="section section-3">
+    <section class="section section-3 reveal-section">
         <div class="container">
             <div class="audit-box">
                 <div class="audit-title">7-day audit + fix</div>
                 <p style="font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9;">I'll analyze your current setup and implement fixes that recover lost revenue</p>
                 <div class="contact-options">
-                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20Ready%20for%20my%207-day%20audit!%20🚀" class="cta-button" style="font-size: 1.3rem; padding: 20px 50px;" target="_blank">
+                    <a href="https://wa.me/923214659149?text=Hi%20Ariyan!%20Ready%20for%20my%207-day%20audit!%20🚀" class="cta-button glass-premium" style="font-size: 1.3rem; padding: 20px 50px;" target="_blank">
                         <span class="whatsapp-icon">📱</span> Get Free Audit (WhatsApp)
                     </a>
-                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=7-Day%20Audit%20Request&body=Hi%20Ariyan,%0A%0APlease%20start%20my%207-day%20lead%20audit!%0A%0ABest%20regards," class="cta-button email" style="font-size: 1.3rem; padding: 20px 50px;">
+                    <a href="mailto:ariyan.nadeem.01@gmail.com?subject=7-Day%20Audit%20Request&body=Hi%20Ariyan,%0A%0APlease%20start%20my%207-day%20lead%20audit!%0A%0ABest%20regards," class="cta-button email glass-premium" style="font-size: 1.3rem; padding: 20px 50px;">
                         ✉️ Email Audit Request
                     </a>
                 </div>
@@ -167,18 +496,63 @@
             window.location.href = 'mailto:ariyan.nadeem.01@gmail.com?subject=' + subject + '&body=' + body;
         }
 
-        // Scroll animations
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Enhanced Scroll animations with Bento Grid effect
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -80px 0px' };
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, observerOptions);
+        
+        // Observe fade-in elements
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
         
+        // Observe bento items with staggered delays
+        document.querySelectorAll('.bento-item').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(el);
+        });
+        
+        // Observe reveal sections
+        document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
+        
+        // Observe stat cards
+        document.querySelectorAll('.stat-card').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.15}s`;
+            observer.observe(el);
+        });
+        
+        // Observe problem items
+        document.querySelectorAll('.problem-item').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.15}s`;
+            observer.observe(el);
+        });
+        
+        // Observe audit box
+        document.querySelectorAll('.audit-box').forEach(el => observer.observe(el));
+        
+        // Parallax effect for lottie elements
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             document.querySelectorAll('.lottie-3d').forEach(el => {
                 el.style.transform = `translateY(${scrolled * 0.5}px)`;
+            });
+            
+            // Smooth parallax for floating orbs (if they exist)
+            document.querySelectorAll('.floating-orb').forEach((el, index) => {
+                const speed = 0.2 + (index * 0.1);
+                el.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
     </script>
