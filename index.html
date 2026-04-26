@@ -1,460 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Dubai Real Estate • Fix Cold Leads in 7 Days</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <!-- Lottie Player -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-      color: white;
-      overflow-x: hidden;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 2;
-    }
-    /* Hero with animated background */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
-      z-index: 1;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-20px) rotate(1deg); }
-      66% { transform: translateY(-10px) rotate(-1deg); }
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 850px;
-      animation: slideInUp 0.9s ease-out;
-    }
-    @keyframes slideInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .headline {
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 1.8rem;
-      background: linear-gradient(135deg, #ffffff 0%, #c7d2ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
-    }
-    .example-box {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 24px;
-      padding: 28px 30px;
-      margin: 32px 0 36px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-      box-shadow: 0 25px 45px rgba(0,0,0,0.4);
-    }
-    .leak-before, .fix-after {
-      flex: 1 1 240px;
-    }
-    .leak-before h4, .fix-after h4 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      opacity: 0.7;
-    }
-    .leak-before h4 { color: #ff8a8a; }
-    .fix-after h4 { color: #6ee7b7; }
-    .time-block {
-      font-size: 2rem;
-      font-weight: 700;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .time-block span {
-      font-size: 1.1rem;
-      font-weight: 400;
-      opacity: 0.8;
-    }
-    .arrow-divider {
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.5);
-    }
-    .deal-probability {
-      background: rgba(255,107,107,0.15);
-      border-radius: 40px;
-      padding: 10px 18px;
-      font-weight: 600;
-      color: #ffaaaa;
-      margin-top: 12px;
-      display: inline-block;
-    }
-    .fix-after .deal-probability {
-      background: rgba(37, 211, 102, 0.18);
-      color: #8df0b0;
-    }
-    /* CTA buttons */
-    .contact-options {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      max-width: 440px;
-      margin-top: 10px;
-    }
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-      color: white;
-      padding: 18px 36px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      width: fit-content;
-      letter-spacing: -0.01em;
-    }
-    .cta-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 30px 60px rgba(37, 211, 102, 0.6);
-    }
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
-    .cta-button:hover::before { left: 100%; }
-    .cta-button.email {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
-    }
-    .cta-button.email:hover { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.6); }
-    .whatsapp-icon { font-size: 1.5rem; }
-    /* Sections */
-    .section {
-      padding: 110px 0;
-      position: relative;
-    }
-    .section-1 { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); }
-    .section-2 { background: rgba(0,0,0,0.2); }
-    .section-3 { text-align: center; }
-    h2 {
-      font-size: 2.4rem;
-      text-align: center;
-      font-weight: 700;
-      margin-bottom: 25px;
-      line-height: 1.3;
-    }
-    .highlight-gradient {
-      background: linear-gradient(135deg, #ff6b6b, #feca57);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 28px;
-      margin-top: 55px;
-    }
-    .process-step {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .process-step:hover { transform: translateY(-6px); }
-    .step-icon {
-      font-size: 2.5rem;
-      margin-bottom: 18px;
-    }
-    .process-step h3 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
-    .guarantee-badge {
-      background: linear-gradient(135deg, rgba(255,215,0,0.18), rgba(255,180,0,0.12));
-      border: 1px solid rgba(255,215,0,0.4);
-      border-radius: 100px;
-      padding: 14px 28px;
-      margin: 40px auto 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      backdrop-filter: blur(8px);
-    }
-    .audit-box {
-      background: linear-gradient(135deg, rgba(102,126,234,0.18), rgba(118,75,162,0.18));
-      backdrop-filter: blur(24px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 32px;
-      padding: 70px 40px;
-      max-width: 650px;
-      margin: 60px auto 0;
-      transform: scale(0.95);
-      opacity: 0;
-      animation: scaleIn 0.8s ease-out 0.4s forwards;
-    }
-    @keyframes scaleIn { to { transform: scale(1); opacity: 1; } }
-    .audit-title {
-      font-size: 2.8rem;
-      font-weight: 800;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .lottie-3d {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      opacity: 0.1;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .lottie-3d.left { top: 15%; left: -8%; }
-    .lottie-3d.right { bottom: 15%; right: -8%; }
-    .credibility-note {
-      font-size: 0.95rem;
-      opacity: 0.8;
-      margin-top: 30px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #ccc;
-    }
-    @media (max-width: 768px) {
-      .hero { padding: 90px 0 60px; min-height: auto; }
-      .headline { text-align: center; }
-      .example-box { flex-direction: column; align-items: flex-start; }
-      .section { padding: 80px 0; }
-      .contact-options { max-width: 100%; align-items: center; }
-      .cta-button { width: 100%; justify-content: center; }
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease-out;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Real Estate Lead Recovery Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; 
+            overflow-x: hidden; 
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Hero Section */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            position: relative; 
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120,119,198,0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite; z-index: 1;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-20px) rotate(1deg); } 66% { transform: translateY(-10px) rotate(-1deg); } }
+        
+        .hero-content { position: relative; z-index: 2; width: 100%; animation: slideInUp 1s ease-out; }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .headline { 
+            font-size: clamp(2rem, 4.5vw, 3.8rem); 
+            font-weight: 800; 
+            line-height: 1.1; 
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+        }
+
+        /* Concrete Example (Leak vs Fix) */
+        .example-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .example-col { padding: 20px; border-radius: 16px; position: relative; overflow: hidden; }
+        .example-col.leak { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); }
+        .example-col.fix { background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3); }
+        
+        .col-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .leak .col-title { color: #ff6b6b; }
+        .fix .col-title { color: #25D366; }
+
+        .timeline { position: relative; padding-left: 20px; border-left: 2px dashed rgba(255,255,255,0.2); margin-left: 10px; }
+        .timeline-item { margin-bottom: 15px; position: relative; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -26px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #555;
+        }
+        .leak .timeline-item:last-child::before { background: #ff6b6b; box-shadow: 0 0 10px #ff6b6b; }
+        .fix .timeline-item::before { background: #25D366; }
+        .fix .timeline-item:last-child::before { background: #25D366; box-shadow: 0 0 10px #25D366; }
+        
+        .time-stamp { font-size: 0.85rem; color: rgba(255,255,255,0.6); font-family: monospace; }
+        .event-desc { font-size: 0.95rem; font-weight: 500; }
+        .result-badge { 
+            display: inline-block; margin-top: 5px; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; 
+        }
+        .leak .result-badge { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+        .fix .result-badge { background: rgba(37, 211, 102, 0.2); color: #25D366; }
+
+        /* Buttons */
+        .cta-button {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            color: white; width: 100%; max-width: 420px;
+            padding: 18px 32px; border-radius: 50px; font-size: 1.15rem; font-weight: 600; text-decoration: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden; border: none; cursor: pointer; margin-bottom: 16px;
+        }
+        .cta-button.whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
+        .cta-button.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(37, 211, 102, 0.4); }
+        .cta-button.email { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .cta-button.email:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4); }
+        
+        .cta-button::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.6s;
+        }
+        .cta-button:hover::before { left: 100%; }
+
+        /* Sections */
+        .section { padding: 100px 0; position: relative; }
+        .section-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; text-align: center; }
+        .section-subtitle { text-align: center; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 3rem; }
+
+        /* Problems/Stats (Updated for "No Fake Claims" but Credibility) */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .stat-card {
+            background: rgba(255,255,255,0.03); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .stat-icon { font-size: 2rem; margin-bottom: 15px; }
+        .stat-head { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: #a8b8ff; }
+        .stat-desc { font-size: 0.95rem; color: rgba(255,255,255,0.6); }
+
+        /* How It Works */
+        .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; position: relative; }
+        .step-card { text-align: center; position: relative; z-index: 2; }
+        .step-number {
+            width: 60px; height: 60px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800;
+            margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+        .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .step-desc { color: rgba(255,255,255,0.7); }
+
+        /* Guarantee Section */
+        .guarantee-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.02));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 24px; padding: 50px; text-align: center; margin-top: 40px;
+            position: relative; overflow: hidden;
+        }
+        .guarantee-icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .guarantee-text { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 15px; }
+        .guarantee-sub { font-size: 1.1rem; color: rgba(255,255,255,0.8); }
+
+        /* Background Elements */
+        .lottie-3d { position: absolute; width: 400px; height: 400px; opacity: 0.08; z-index: 0; pointer-events: none; }
+        .lottie-3d.left { top: 10%; left: -10%; }
+        .lottie-3d.right { bottom: 10%; right: -10%; }
+
+        /* Animations */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hero { padding-top: 100px; padding-bottom: 40px; min-height: auto; }
+            .example-container { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.8rem; }
+            .guarantee-box { padding: 30px 20px; }
+            .guarantee-text { font-size: 1.4rem; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Background Lottie animations -->
-  <lottie-player class="lottie-3d left" src="https://assets4.lottiefiles.com/packages/lf20_tss3upjt.json" background="transparent" speed="0.5" loop autoplay></lottie-player>
-  <lottie-player class="lottie-3d right" src="https://assets1.lottiefiles.com/packages/lf20_yf3kcmhw.json" background="transparent" speed="0.3" loop autoplay></lottie-player>
+    <lottie-player class="lottie-3d left" src="https://assets4.lottiefiles.com/packages/lf20_tss3upjt.json" background="transparent" speed="0.5" loop autoplay></lottie-player>
+    <lottie-player class="lottie-3d right" src="https://assets1.lottiefiles.com/packages/lf20_yf3kcmhw.json" background="transparent" speed="0.3" loop autoplay></lottie-player>
 
-  <!-- HERO SECTION with concrete example -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1 class="headline fade-in">Dubai real estate leads going cold?<br>I fix response gaps so you close more from the same inquiries in 7 days.</h1>
-        
-        <!-- Concrete leak example ABOVE THE FOLD -->
-        <div class="example-box fade-in">
-          <div class="leak-before">
-            <h4>❌ Typical leak</h4>
-            <div class="time-block">2:10 PM <span>inquiry</span></div>
-            <div style="margin: 8px 0;">→ first reply <strong>6:40 PM</strong></div>
-            <div class="deal-probability">📉 Deal probability collapses</div>
-          </div>
-          <div class="arrow-divider">⟶</div>
-          <div class="fix-after">
-            <h4>✅ Fix applied</h4>
-            <div class="time-block">0 min <span>instant WhatsApp</span></div>
-            <div>+ follow-ups <strong>10 min · 24h</strong></div>
-            <div class="deal-probability">📈 Conversion stays alive</div>
-          </div>
-        </div>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="headline fade-in">Dubai real estate leads going cold? I fix response gaps so you close more from the same inquiries in 7 days.</h1>
+                
+                <!-- Concrete Example: Leak vs Fix -->
+                <div class="example-container fade-in">
+                    <!-- The Leak -->
+                    <div class="example-col leak">
+                        <div class="col-title"><span style="font-size:1.2rem">⚠️</span> Typical Leak</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Gap: 4h 30m</div>
+                                <div class="event-desc">Lead waits (or goes to competitor)</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 6:40 PM</div>
+                                <div class="event-desc">Agent responds manually</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Deal probability collapses</div>
+                    </div>
 
-        <div class="contact-options fade-in">
-          <!-- WhatsApp CTA with new prefill -->
-          <a href="https://wa.me/923214659149?text=Hi%20Ariyan%20%E2%80%94%20audit%20my%20lead%20response.%20Here%E2%80%99s%20how%20leads%20come%20in:%20%5Bform/WhatsApp/ads%5D." class="cta-button" target="_blank">
-            <span class="whatsapp-icon">📱</span> WhatsApp Me Now (Instant)
-          </a>
-          <!-- Email CTA with new subject/body -->
-          <button onclick="openEmail()" class="cta-button email">
-            ✉️ Email Me Instead
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
+                    <!-- The Fix -->
+                    <div class="example-col fix">
+                        <div class="col-title"><span style="font-size:1.2rem">⚡</span> The Fix</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 0 min</div>
+                                <div class="event-desc">Instant WhatsApp Auto-Reply</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Follow-up: 10m, 24h</div>
+                                <div class="event-desc">Smart sequence engagement</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Lead captured & qualified</div>
+                    </div>
+                </div>
 
-  <!-- HOW IT WORKS + credibility focus -->
-  <section class="section section-1">
-    <div class="container">
-      <h2 style="margin-bottom: 10px;">How I fix response gaps</h2>
-      <p style="text-align: center; max-width: 700px; margin: 0 auto 20px; opacity: 0.8; font-size: 1.15rem;">
-        Built for fast response + follow-up systems (WhatsApp / email / forms).<br>Focus: response time, missed inquiries, follow-up gaps.
-      </p>
-      <div class="process-grid">
-        <div class="process-step fade-in">
-          <div class="step-icon">🗺️</div>
-          <h3>Map where leads drop</h3>
-          <p>Forms, WhatsApp, DMs — I identify exactly where inquiries slow down or get lost.</p>
+                <!-- Contact Options -->
+                <div style="max-width: 450px; margin: 0 auto;">
+                    <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp fade-in">
+                        <span>📱</span> WhatsApp Me Now (Instant)
+                    </a>
+                    <button onclick="openEmail()" class="cta-button email fade-in">
+                        <span>✉️</span> Email Me Instead
+                    </button>
+                    <p style="text-align: center; font-size: 0.85rem; opacity: 0.6; margin-top: 15px;">
+                        Built for fast response + follow-up systems (WhatsApp/email/forms). Focus: Response time & missed inquiries.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="process-step fade-in">
-          <div class="step-icon">⚡</div>
-          <h3>Instant reply + 2 follow-ups</h3>
-          <p>I install automation that responds in 0 min, then follows up at 10 min & 24h.</p>
-        </div>
-        <div class="process-step fade-in">
-          <div class="step-icon">📊</div>
-          <h3>Track before/after</h3>
-          <p>Clear response time log so you see the improvement, not just claims.</p>
-        </div>
-      </div>
-      
-      <!-- Tight guarantee (no fake numbers) -->
-      <div class="guarantee-badge fade-in" style="margin-top: 50px;">
-        <span style="font-size: 1.6rem;">🔍</span> 
-        <span><strong>If I can’t show at least one clear leak in 24 hours, you don’t proceed.</strong></span>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PROBLEM FIX SECTION (kept from original but refined) -->
-  <section class="section section-2">
-    <div class="container">
-      <h2 style="margin-bottom: 50px;">I fix these exact gaps</h2>
-      <div class="problems-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
-        <div class="problem-item fade-in" style="display: flex; align-items: center; gap: 20px; padding: 24px; background: rgba(255,255,255,0.05); border-radius: 16px; border-left: 4px solid #667eea;">
-          <div class="problem-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⏰</div>
-          <div><h3>Delayed replies</h3><p>Automation responds instantly 24/7</p></div>
+    <!-- The Problem (Credibility without fake client numbers) -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">The cost of slow response</h2>
+            <p class="section-subtitle fade-in">Industry standards highlight exactly where revenue is lost before you even speak to the prospect.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">🐢</div>
+                    <div class="stat-head">The 5-Minute Rule</div>
+                    <div class="stat-desc">Odds of qualifying a lead drop 400% if you wait longer than 5 minutes to respond.</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-head">The Chase Ends Fast</div>
+                    <div class="stat-desc">78% of buyers choose the vendor who responds to their inquiry first.</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">📵</div>
+                    <div class="stat-head">The Silent Drop-off</div>
+                    <div class="stat-desc">Most businesses fail to follow up more than twice, yet 80% of sales happen after 5 contacts.</div>
+                </div>
+            </div>
         </div>
-        <div class="problem-item fade-in" style="display: flex; align-items: center; gap: 20px; padding: 24px; background: rgba(255,255,255,0.05); border-radius: 16px; border-left: 4px solid #667eea;">
-          <div class="problem-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📧</div>
-          <div><h3>No follow-ups</h3><p>Smart sequences nurture every lead</p></div>
-        </div>
-        <div class="problem-item fade-in" style="display: flex; align-items: center; gap: 20px; padding: 24px; background: rgba(255,255,255,0.05); border-radius: 16px; border-left: 4px solid #667eea;">
-          <div class="problem-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">❓</div>
-          <div><h3>Lost inquiries</h3><p>Every message captured + tracked</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 7-DAY AUDIT + CTA (with upgraded email subject) -->
-  <section class="section section-3">
-    <div class="container">
-      <div class="audit-box">
-        <div class="audit-title">7-day audit + fix</div>
-        <p style="font-size: 1.25rem; margin-bottom: 45px; opacity: 0.9;">I'll analyze your current setup and implement fixes that recover lost revenue — starting with one clear leak.</p>
-        
-        <div class="contact-options" style="margin: 0 auto;">
-          <a href="https://wa.me/923214659149?text=Hi%20Ariyan%20%E2%80%94%20audit%20my%20lead%20response.%20Here%E2%80%99s%20how%20leads%20come%20in:%20%5Bform/WhatsApp/ads%5D." class="cta-button" style="font-size: 1.25rem; padding: 20px 45px;" target="_blank">
-            <span class="whatsapp-icon">📱</span> Get Free Audit (WhatsApp)
-          </a>
-          <button onclick="openEmailAudit()" class="cta-button email" style="font-size: 1.25rem; padding: 20px 45px;">
-            ✉️ Email Audit Request
-          </button>
+    <!-- How It Works -->
+    <section class="section" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <h2 class="section-title fade-in">How the 7-day audit works</h2>
+            <p class="section-subtitle fade-in">A simple, surgical approach to plugging the leaks in your funnel.</p>
+            
+            <div class="how-grid">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Map Leaks</h3>
+                    <p class="step-desc">We analyze exactly where leads drop across your Forms, WhatsApp, and DMs.</p>
+                </div>
+                <div class="step-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Install Fix</h3>
+                    <p class="step-desc">I install an instant reply mechanism + 2 smart follow-ups tailored to your business.</p>
+                </div>
+                <div class="step-card fade-in" style="transition-delay: 0.4s;">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Track It</h3>
+                    <p class="step-desc">We compare the before/after response times to prove the recovery of lost revenue.</p>
+                </div>
+            </div>
+
+            <!-- Guarantee -->
+            <div class="guarantee-box fade-in">
+                <span class="guarantee-icon">🛡️</span>
+                <div class="guarantee-text">Risk-Free Guarantee</div>
+                <div class="guarantee-sub">“If I can’t show at least one clear leak in 24 hours, you don’t proceed.”</div>
+            </div>
         </div>
-        <p class="credibility-note">
-          No fake stats. Real focus: response time, missed inquiries, follow-up gaps.<br>You’ll see the leak within 24 hours or we stop.
-        </p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <script>
-    // ---------- EMAIL FUNCTIONS WITH UPGRADED SUBJECT/BODY ----------
-    function openEmail() {
-      const subject = encodeURIComponent('Audit my lead response — [Business Name]');
-      const body = encodeURIComponent(
-        'Hi Ariyan,\n\nI want the 7-day lead response audit. Here is how my leads typically come in: [form/WhatsApp/ads].\n\nPlease check where I’m losing inquiries.\n\nBest,'
-      );
-      window.location.href = 'mailto:ariyan.nadeem.01@gmail.com?subject=' + subject + '&body=' + body;
-    }
-    
-    function openEmailAudit() {
-      const subject = encodeURIComponent('Audit my lead response — [Business Name]');
-      const body = encodeURIComponent(
-        'Hi Ariyan,\n\nStart my 7-day audit. I want to fix missed leads and slow response.\n\nLead sources: [form/WhatsApp/ads].\n\nLooking forward to the leak report.\n\nThanks,'
-      );
-      window.location.href = 'mailto:ariyan.nadeem.01@gmail.com?subject=' + subject + '&body=' + body;
-    }
+    <!-- Final CTA -->
+    <section class="section" style="padding-bottom: 120px;">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title fade-in">Ready to fix your lead response?</h2>
+            <p class="section-subtitle fade-in">Stop letting inquiries go cold. Start the audit today.</p>
+            
+            <div style="max-width: 450px; margin: 0 auto;">
+                <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp fade-in">
+                    <span>📱</span> Get Free Audit (WhatsApp)
+                </a>
+                <button onclick="openEmail()" class="cta-button email fade-in">
+                    <span>✉️</span> Email Audit Request
+                </button>
+            </div>
+        </div>
+    </section>
 
-    // ---------- SCROLL ANIMATIONS (Intersection Observer) ----------
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+    <script>
+        // WhatsApp Logic with new pre-filled text
+        function openWhatsApp() {
+            const text = "Hi Ariyan — audit my lead response. Here’s how leads come in: [form/WhatsApp/ads].";
+            const encodedText = encodeURIComponent(text);
+            const url = `https://wa.me/923214659149?text=${encodedText}`;
+            window.open(url, '_blank');
         }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Subtle parallax for lottie elements
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      document.querySelectorAll('.lottie-3d').forEach(el => {
-        el.style.transform = `translateY(${scrolled * 0.4}px)`;
-      });
-    });
-  </script>
+        // Email Logic with new pre-filled subject
+        function openEmail() {
+            const subject = encodeURIComponent('Audit my lead response — [Business Name]');
+            const body = encodeURIComponent('Hi Ariyan,\n\nI want to audit my lead response system.\n\nBest regards,');
+            window.location.href = `mailto:ariyan.nadeem.01@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.lottie-3d').forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
