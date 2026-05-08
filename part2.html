@@ -10,17 +10,15 @@
   :root {
     --ink: #0a0f0d;
     --paper: #edf5f0;
-    --gold: #2d7a4f;
-    --gold-light: #5ab87a;
-    --rust: #163d27;
-    --cream: #f0f7f2;
+    --green: #2d7a4f;
+    --green-light: #5ab87a;
+    --dark-green: #163d27;
     --muted: #5a6b60;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --cream: #f0f7f2;
+    --gold: #c9973a;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
@@ -30,36 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* ── CUSTOM CURSOR ── */
-  .cursor, .cursor-dot { pointer-events: none; z-index: 9999; position: fixed; }
-  .cursor {
-    width: 20px; height: 20px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    transition: transform 0.2s ease, background 0.2s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-dot {
-    width: 4px; height: 4px;
-    background: var(--gold);
-    border-radius: 50%;
-    z-index: 10000;
-  }
-  .cursor.hover {
-    transform: scale(2.5);
-    background: rgba(45, 122, 79, 0.2);
-    border-color: transparent;
-  }
-
-  /* ── SCROLL PROGRESS ── */
-  .scroll-progress {
-    position: fixed; top: 0; left: 0;
-    width: 0%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
-    z-index: 1000;
-  }
-
-  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
@@ -71,7 +39,7 @@
   .nav-brand {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
-    color: var(--gold-light);
+    color: var(--green-light);
     letter-spacing: 0.15em;
     text-transform: uppercase;
   }
@@ -84,28 +52,38 @@
     letter-spacing: 0.1em;
     transition: color 0.3s;
   }
-  .nav-parts a:hover, .nav-parts a.active { color: var(--gold-light); }
+  .nav-parts a:hover, .nav-parts a.active { color: var(--green-light); }
 
-  /* ── HERO ── */
+  /* HERO */
   .hero {
     min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 0 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     position: relative;
     overflow: hidden;
+    padding-top: 5rem;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 5rem 4rem 6rem 6rem;
+    position: relative; z-index: 2;
+  }
+  .hero-right {
+    display: flex; align-items: center; justify-content: center;
+    padding: 5rem 6rem 5rem 2rem;
+    position: relative; z-index: 2;
   }
   .hero-bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(45,122,79,0.25) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 20% 60%, rgba(90,184,122,0.12) 0%, transparent 60%),
-      linear-gradient(160deg, #0a0f0d 0%, #0f1a12 50%, #0a0f0d 100%);
+      radial-gradient(ellipse 80% 70% at 100% 50%, rgba(45,122,79,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 0% 80%, rgba(22,61,39,0.4) 0%, transparent 60%),
+      linear-gradient(135deg, #0a0f0d 0%, #0f1a12 100%);
   }
-  .hero-left { position: relative; z-index: 2; max-width: 700px; }
   .part-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    color: var(--gold-light);
+    color: var(--green-light);
     letter-spacing: 0.25em;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
@@ -114,17 +92,20 @@
   }
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
+    font-size: clamp(3rem, 6vw, 6rem);
     font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.02em;
+    line-height: 1.0;
     opacity: 0;
     animation: fadeUp 1s ease 0.5s forwards;
   }
-  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-title em {
+    font-style: italic;
+    color: var(--green-light);
+    display: block;
+  }
   .hero-subtitle {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 300;
     font-style: italic;
     color: rgba(237,245,240,0.6);
@@ -132,29 +113,30 @@
     opacity: 0;
     animation: fadeUp 1s ease 0.7s forwards;
   }
-  .hero-right {
-    position: absolute; right: 6rem; bottom: 6rem;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.9s forwards;
-  }
   .timeline-preview {
-    border-left: 2px solid var(--gold);
-    padding-left: 1.5rem;
+    display: flex; flex-direction: column; gap: 0;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
   }
   .timeline-item {
-    margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 1px solid rgba(45,122,79,0.3);
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(45,122,79,0.15);
+    position: relative;
   }
+  .timeline-item:last-child { border-bottom: none; }
   .t-date {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gold-light);
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    color: var(--green-light);
+    letter-spacing: 0.08em;
+    min-width: 70px;
+    padding-top: 0.2rem;
   }
+  .t-content { flex: 1; }
   .t-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--paper);
   }
@@ -162,11 +144,11 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.9rem;
     color: var(--muted);
+    font-style: italic;
+    margin-top: 0.2rem;
   }
 
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-  /* ── CHAPTER ── */
+  /* CHAPTERS */
   .chapter {
     max-width: 900px;
     margin: 0 auto;
@@ -180,27 +162,29 @@
   }
   .chapter-number {
     font-family: 'Playfair Display', serif;
-    font-size: 8rem;
-    font-weight: 900;
-    color: rgba(45,122,79,0.15);
+    font-size: 8rem; font-weight: 900;
+    color: rgba(45,122,79,0.1);
     line-height: 1;
+    min-width: 120px;
+    letter-spacing: -0.04em;
   }
+  .chapter-info { flex: 1; padding-top: 1.5rem; }
   .chapter-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
-    color: var(--gold-light);
+    color: var(--green-light);
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    margin-bottom: 0.7rem;
   }
   .chapter-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
     font-weight: 700;
     line-height: 1.15;
   }
-  .chapter-title em { font-style: italic; color: var(--gold-light); }
+  .chapter-title em { font-style: italic; color: var(--green-light); }
 
-  /* ── PROSE ── */
   .prose p {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.25rem;
@@ -208,166 +192,331 @@
     line-height: 1.85;
     color: rgba(237,245,240,0.85);
     margin-bottom: 1.8rem;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
   }
-  .prose p.visible { opacity: 1; transform: translateY(0); }
   .prose p:first-child::first-letter {
     font-family: 'Playfair Display', serif;
-    font-size: 5rem;
-    font-weight: 900;
+    font-size: 5rem; font-weight: 900;
+    line-height: 0.85;
     float: left;
-    margin-right: 0.12em;
-    color: var(--gold-light);
+    margin-right: 0.12em; margin-top: 0.05em;
+    color: var(--green-light);
+  }
+  .prose strong { font-weight: 600; color: var(--paper); }
+  .prose em { font-style: italic; color: var(--green-light); }
+
+  .pull-quote {
+    margin: 3.5rem 0;
+    padding: 2.5rem 3rem;
+    border-left: 3px solid var(--green-light);
+    background: rgba(45,122,79,0.06);
+    position: relative;
+  }
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: rgba(45,122,79,0.2);
+    position: absolute; top: -1rem; left: 1rem;
+    line-height: 1;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem !important;
+    font-style: italic;
+    color: var(--paper) !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+  .pull-quote p::first-letter { all: unset !important; }
+
+  .skill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(45,122,79,0.15);
+    border: 1px solid rgba(45,122,79,0.15);
+    margin: 3rem 0;
+  }
+  .skill-cell {
+    background: var(--ink);
+    padding: 1.8rem 2rem;
+  }
+  .skill-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--green-light);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .skill-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(237,245,240,0.7);
+    background: rgba(45,122,79,0.1);
+    border: 1px solid rgba(45,122,79,0.2);
+    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.05em;
   }
 
-  /* ── GLASS CARD ── */
-  .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 2rem;
-    margin: 2rem 0;
-    transition: all 0.3s ease;
+  .section-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin: 5rem 0;
   }
-  .glass-card:hover {
-    border-color: var(--gold);
-    box-shadow: 0 10px 30px var(--glass-shadow);
-    transform: translateY(-5px);
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(45,122,79,0.3), transparent);
   }
 
-  /* ── PAGE NAV ── */
   .page-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3rem;
-    border-top: 1px solid rgba(45,122,79,0.2);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3rem 6rem;
+    border-top: 1px solid rgba(45,122,79,0.15);
     margin-top: 4rem;
   }
   .page-nav-info {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
+    font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em;
   }
   .page-nav a {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold-light);
-    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: var(--green-light); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: gap 0.3s;
   }
+  .page-nav a.back { color: var(--muted); }
+  .page-nav a:hover { gap: 0.9rem; }
 
-  @media (max-width: 768px) {
-    .cursor, .cursor-dot { display: none; }
-    * { cursor: auto !important; }
-    nav { padding: 1rem 1.5rem; }
-    .nav-parts { display: none; }
-    .hero { padding: 0 2rem; }
-    .chapter { padding: 4rem 1.5rem; }
-    .hero-right { display: none; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
   }
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
-  <div class="cursor"></div>
-  <div class="cursor-dot"></div>
-  <div class="scroll-progress"></div>
 
-  <nav>
-    <div class="nav-brand">Ariyan Nadeem — The Story</div>
-    <div class="nav-parts">
-      <a href="part1.html">Part I</a>
-      <a href="part2.html" class="active">Part II</a>
-      <a href="part3.html">Part III</a>
-      <a href="part4.html">Part IV</a>
-      <a href="part5.html">Part V</a>
-    </div>
-  </nav>
+<nav>
+  <div class="nav-brand">Ariyan Nadeem — The Story</div>
+  <div class="nav-parts">
+    <a href="story_part1.html">Part I</a>
+    <a href="story_part2.html" class="active">Part II</a>
+    <a href="story_part3.html">Part III</a>
+    <a href="story_part4.html">Part IV</a>
+    <a href="story_part5.html">Part V</a>
+  </div>
+</nav>
 
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-left">
-      <div class="part-label">Part Two · Pages 3 & 4</div>
-      <h1 class="hero-title">The Architecture<br>of a<br><em>Self-Made Mind</em></h1>
-      <p class="hero-subtitle">How a teenager in Lahore decided to build production AI systems without waiting for the world's permission.</p>
-    </div>
-    <div class="hero-right">
-      <div class="timeline-preview">
-        <div class="timeline-item">
-          <div class="t-date">Sep 2024</div>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="part-label">Part Two · Pages 3 &amp; 4</div>
+    <h1 class="hero-title">
+      The Architecture<br>of a<br>
+      <em>Self-Made Mind</em>
+    </h1>
+    <p class="hero-subtitle">How a teenager in Lahore decided to build production AI systems without waiting for the world's permission.</p>
+  </div>
+  <div class="hero-right">
+    <div class="timeline-preview">
+      <div class="timeline-item">
+        <div class="t-date">Sep 2024</div>
+        <div class="t-content">
           <div class="t-title">Enrolled at Islamia College</div>
           <div class="t-desc">Science stream, mathematics focus</div>
         </div>
-        <div class="timeline-item">
-          <div class="t-date">Oct 2024</div>
-          <div class="t-title">First Production Model</div>
-          <div class="t-desc">Deployed RAG pipeline on CPU</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Nov 2024</div>
+        <div class="t-content">
+          <div class="t-title">Started Career — Self-Employed</div>
+          <div class="t-desc">AI Systems Engineer, Remote, Global</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Jul 2025</div>
+        <div class="t-content">
+          <div class="t-title">Federated XAI Healthcare Predictor</div>
+          <div class="t-desc">94% accuracy, SHAP/LIME explainability</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Aug 2025</div>
+        <div class="t-content">
+          <div class="t-title">Edge Voice Intelligence (TinyML)</div>
+          <div class="t-desc">75KB CNN, 3ms DSP inference, offline</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Dec 2025</div>
+        <div class="t-content">
+          <div class="t-title">Google/Kaggle AI Agents Intensive</div>
+          <div class="t-desc">97.7% latency reduction, badge earned</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Jan 2026</div>
+        <div class="t-content">
+          <div class="t-title">7 Certifications in One Month</div>
+          <div class="t-desc">Deloitte, AWS, TATA, Google — all completed</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <main>
-    <article class="chapter fade-in">
-      <div class="chapter-header">
-        <div class="chapter-number">02</div>
-        <div class="chapter-info">
-          <div class="chapter-tag">Page Three · The Decision</div>
-          <h2 class="chapter-title">Choosing the Hard Path<br><em>Before It Was Cool</em></h2>
+<!-- PAGE 3 -->
+<main>
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">03</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page Three · The Decision</div>
+      <h2 class="chapter-title">The Road Not Taught:<br><em>Choosing to Self-Build</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      The most consequential decision Ariyan Nadeem ever made was one that most people never consciously face: the decision to not wait. In November 2024, while simultaneously enrolled as a science student at Govt. Islamia Associate College, Ariyan made the quiet but radical choice to begin his professional career. He did not wait to graduate. He did not wait for an internship offer. He did not wait for a mentor to discover him. He simply began — and registered himself as a self-employed AI Systems Engineer, operating remotely, with the entire global internet as both his classroom and his marketplace.
+    </p>
+
+    <p>
+      This is not as simple as it sounds. Self-directed learning in a field as complex and rapidly evolving as artificial intelligence requires more than just access to information — it requires the discipline to build structures of understanding in the absence of external scaffolding. No professor sets the syllabus. No exam tells you what you don't know. No deadline forces you to ship something. Everything depends on internal motivation and the willingness to confront failure without the validation of a grade or a teacher's approval. Ariyan chose this path deliberately, and he chose it young.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Owned the full lifecycle: model optimization, API development, Linux deployment, and performance tuning."</p>
+    </div>
+
+    <p>
+      What does it mean to "own the full lifecycle"? In practical terms, it means Ariyan did not delegate any piece of his projects to external tools or collaborative partners. He did not use AutoML platforms to abstract away the complexity of model training. He did not rely on pre-packaged APIs that hide the engineering decisions underneath. He built from the model layer down to the deployment layer — touching optimization, API design, Linux system configuration, and performance engineering all within the same project. That kind of end-to-end ownership is unusual even among senior engineers with years of team experience.
+    </p>
+
+    <p>
+      His technical identity crystallized around a specific philosophy: <strong>performance under constraint</strong>. This philosophy was not borrowed from a textbook or a conference talk. It emerged organically from the reality of his environment. Operating without access to cloud GPU credits or enterprise compute clusters, Ariyan had to make his systems fast on CPUs. He had to make his models small enough to deploy on constrained hardware. He had to design inference pipelines that operated in milliseconds, not seconds. And in doing so, he developed a skill set that is increasingly rare in an industry where most engineers are trained on abundant compute and never learn to optimize at the hardware level.
+    </p>
+
+    <div class="skill-grid">
+      <div class="skill-cell">
+        <div class="skill-cat">AI &amp; Machine Learning</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Agentic AI</span>
+          <span class="skill-tag">RAG (ChromaDB)</span>
+          <span class="skill-tag">INT8 Quantization</span>
+          <span class="skill-tag">GGUF</span>
+          <span class="skill-tag">SHAP / LIME</span>
+          <span class="skill-tag">Adversarial Robustness</span>
         </div>
       </div>
-
-      <div class="prose">
-        <p>While his peers were memorizing formulas for exams, Ariyan was reading research papers on transformer architectures. While others waited for university labs and corporate resources, he was building production-grade AI systems on a consumer laptop with no GPU.</p>
-        <p>This wasn't rebellion for its own sake. It was necessity transformed into strategy. In a country where access to cutting-edge technology is limited by geography and economics, waiting for permission means waiting forever. So Ariyan chose a different path: become so good they can't ignore you, even from Lahore.</p>
+      <div class="skill-cell">
+        <div class="skill-cat">Systems &amp; Deployment</div>
+        <div class="skill-tags">
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">GitHub Actions</span>
+        </div>
       </div>
-
-      <div class="glass-card fade-in">
-        <h3 style="font-family: 'Playfair Display'; font-size: 1.3rem; margin-bottom: 1rem;">The Philosophy</h3>
-        <p style="font-family: 'Cormorant Garamond'; font-size: 1.1rem; line-height: 1.7; color: rgba(237,245,240,0.8);">Constraints breed creativity. Limitations force innovation. What others see as obstacles, Ariyan sees as design parameters.</p>
+      <div class="skill-cell">
+        <div class="skill-cat">Performance &amp; Edge</div>
+        <div class="skill-tags">
+          <span class="skill-tag">TinyML</span>
+          <span class="skill-tag">TFLite</span>
+          <span class="skill-tag">DSP Pipelines</span>
+          <span class="skill-tag">Low-Latency Inference</span>
+        </div>
       </div>
-
-      <div class="prose">
-        <p>The decision to go self-employed wasn't about rejecting education—it was about refusing to let formal timelines dictate his learning velocity. At 17, while most students are just discovering their interests, Ariyan was already shipping code that solved real business problems.</p>
-        <p><strong>He didn't ask for opportunities. He created them.</strong> And in doing so, he discovered something profound: the world rewards those who deliver value, regardless of age, location, or credentials.</p>
+      <div class="skill-cell">
+        <div class="skill-cat">Professional Skills</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Technical Communication</span>
+          <span class="skill-tag">Problem Solving</span>
+          <span class="skill-tag">Rapid Prototyping</span>
+          <span class="skill-tag">Independent Execution</span>
+        </div>
       </div>
-    </article>
-
-    <div class="page-nav">
-      <div class="page-nav-info">Part II of V · Pages 3–4</div>
-      <a href="part3.html">Continue to Part III →</a>
     </div>
-  </main>
+
+    <p>
+      Looking at Ariyan's skill matrix, one notices a pattern that separates him from most self-taught developers: his knowledge is not horizontal. He did not collect a wide, shallow set of tools by following trending tutorials. Instead, his skills are <em>vertical</em> — they drill deep into specific problem domains. He understands not just how to use a quantization library, but <em>why</em> INT8 quantization works, what precision trade-offs it introduces, and when GGUF format is preferred over other quantization schemes. He knows not just how to write a FastAPI endpoint, but how to design one that can handle production-grade concurrency on a Linux system with minimal latency overhead.
+    </p>
+  </div>
+</article>
+
+<!-- DIVIDER -->
+<div style="max-width:900px;margin:0 auto;padding:0 3rem;">
+  <div class="section-divider"><span style="color:var(--green-light);font-size:1.2rem;">✦</span></div>
+</div>
+
+<!-- PAGE 4 -->
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">04</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page Four · The Apprenticeship</div>
+      <h2 class="chapter-title">Learning by<br><em>Shipping Real Things</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      There is a quiet revolution happening in how the most capable technologists of this generation are learning their craft. The traditional path — degree, then job, then real-world experience — is being disrupted by something more direct: build something real, right now, and let the feedback loop of actual systems teach you what no classroom can. Ariyan Nadeem is a product of this revolution. His education happened not in lectures but in the debugger, not in textbooks but in API documentation, not in exams but in the unforgiving output of a production system that either works or doesn't.
+    </p>
+
+    <p>
+      His first major project — the <strong>Federated XAI Healthcare Predictor</strong>, built between July and October 2025 — is a masterclass in ambition for someone with no institutional backing. He built an XGBoost-based prediction system that achieved <em>94% accuracy</em> on healthcare outcome data, and then went further: he incorporated explainable AI outputs using SHAP and LIME, so that the predictions were not black boxes but interpretable outputs that a clinician or analyst could actually understand and trust. He also simulated federated learning across multiple nodes — meaning the system was designed to train on distributed data without centralizing sensitive patient information, a design principle that is at the frontier of privacy-preserving machine learning.
+    </p>
+
+    <div class="pull-quote">
+      <p>"94% accuracy. Federated learning. Explainable outputs. Built independently. In three months. At sixteen."</p>
+    </div>
+
+    <p>
+      Let that sink in. This was not a tutorial project. This was not a homework assignment. This was a fully functional, privacy-aware, explainable ML system built by a self-employed teenager in Lahore, operating without a team, without institutional compute, and without a supervisor. The project addressed real problems in healthcare AI — problems that research labs with entire teams of PhDs are actively working on. And he did it while also being a full-time student.
+    </p>
+
+    <p>
+      Following that, between August and November 2025, he built the <strong>Edge-Optimized Voice Intelligence</strong> system — a TinyML project that pushed the boundaries of what constrained hardware can do. He designed and compressed a keyword-spotting Convolutional Neural Network down to approximately <em>75 kilobytes</em> using INT8 quantization. To put that in perspective: 75KB is smaller than most image files you send in a text message. And inside that 75KB lived a neural network capable of recognizing spoken keywords in real time, running a full DSP pipeline with a <em>3-millisecond inference latency</em>, and doing it entirely offline — no internet connection required, no cloud dependency, no power-hungry GPU.
+    </p>
+
+    <p>
+      That project alone speaks to a sophisticated understanding of the entire ML compression pipeline: architecture design, quantization theory, DSP signal processing, embedded system constraints, and offline deployment. Each of those is a deep sub-field in its own right. Ariyan wove them together into a single working system.
+    </p>
+
+    <p>
+      The pattern that emerges across all his early projects is one of relentless constraint-driven innovation. Where most learners build toy models to demonstrate concepts, Ariyan built systems that addressed real technical challenges: privacy in federated learning, interpretability in healthcare AI, size constraints in edge deployment. His projects are not demonstrations — they are solutions. And solutions, by definition, require a level of engineering discipline that goes far beyond following a tutorial to its conclusion.
+    </p>
+
+    <p>
+      By the end of 2025, Ariyan had already proven to himself — through working code and measurable results — that he could build serious AI systems independently. The next phase of his journey would be to accumulate the formal recognition that could open doors beyond his immediate network. And so, in one of the most concentrated bursts of certification effort imaginable, he set about doing exactly that.
+    </p>
+  </div>
+</article>
+
+<div class="page-nav">
+  <a href="story_part1.html" class="back">← Part I</a>
+  <div class="page-nav-info">Part II of V · Pages 3–4</div>
+  <a href="story_part3.html">Continue to Part III →</a>
+</div>
+</main>
 
 <script>
-  const cursor = document.querySelector('.cursor');
-  const cursorDot = document.querySelector('.cursor-dot');
-  
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
-  });
-
-  document.querySelectorAll('a').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-  });
-
-  const scrollProgress = document.querySelector('.scroll-progress');
-  window.addEventListener('scroll', () => {
-    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    scrollProgress.style.width = scrolled + '%';
-  });
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
-  
-  document.querySelectorAll('.fade-in, .prose p').forEach(el => observer.observe(el));
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
