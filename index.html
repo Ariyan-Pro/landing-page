@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dubai Real Estate Lead Recovery Audit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #25D366;
+            --danger: #ff6b6b;
+            --gold: #ffd700;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
@@ -15,8 +21,16 @@
             overflow-x: hidden;
             min-height: 100vh;
             line-height: 1.6;
+            will-change: scroll-position;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* PERFORMANCE OPTIMIZATIONS */
+        .gpu-accelerated {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
 
         /* GLASSMORPHISM BASE CLASS */
         .glass {
@@ -29,57 +43,172 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        /* TRANSPARENT ANIMATION - Floating Orbs */
+        /* TRANSPARENT ANIMATION - Floating Orbs (Optimized) */
         .orb {
             position: fixed;
             border-radius: 50%;
             filter: blur(80px);
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
             animation: orbFloat 20s ease-in-out infinite;
         }
         .orb-1 {
-            width: 400px;
-            height: 400px;
+            width: 400px; height: 400px;
             background: rgba(102, 126, 234, 0.3);
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
+            top: -100px; left: -100px;
         }
         .orb-2 {
-            width: 500px;
-            height: 500px;
+            width: 500px; height: 500px;
             background: rgba(118, 75, 162, 0.25);
-            bottom: -150px;
-            right: -150px;
+            bottom: -150px; right: -150px;
             animation-delay: -5s;
         }
         .orb-3 {
-            width: 300px;
-            height: 300px;
+            width: 300px; height: 300px;
             background: rgba(37, 211, 102, 0.2);
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             animation-delay: -10s;
         }
         @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 30px) scale(0.9); }
-            75% { transform: translate(40px, 20px) scale(1.05); }
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            25% { transform: translate3d(50px, -50px, 0) scale(1.1); }
+            50% { transform: translate3d(-30px, 30px, 0) scale(0.9); }
+            75% { transform: translate3d(40px, 20px, 0) scale(1.05); }
         }
 
         /* SCROLL PROGRESS BAR */
         .scroll-progress {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 0%;
             height: 3px;
             background: linear-gradient(90deg, #667eea, #25D366, #764ba2);
             z-index: 10000;
-            transition: width 0.1s ease;
+            will-change: width;
         }
+
+        /* APPLE-STYLE TEXT GRADIENT REVEAL */
+        .gradient-reveal {
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,1) 50%, 
+                rgba(255,255,255,0.3) 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: background-position 0.8s ease;
+        }
+        .gradient-reveal.revealed {
+            background-position: 0% 0;
+        }
+
+        /* SCROLLLYTELLING - Tree Growth Animation */
+        .scrolly-tree {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 20px;
+            height: 0%;
+            background: linear-gradient(to top, #8B4513, #A0522D);
+            transform: translateX(-50%);
+            border-radius: 10px 10px 0 0;
+            transition: height 0.1s linear;
+        }
+        .tree-branches {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            width: 0%;
+            height: 150px;
+            transform: translateX(-50%);
+            transition: width 0.1s linear;
+        }
+        .tree-leaves {
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            width: 0px;
+            height: 0px;
+            background: radial-gradient(circle, rgba(37, 211, 102, 0.6) 0%, transparent 70%);
+            transform: translate(-50%, 50%);
+            border-radius: 50%;
+            transition: all 0.1s linear;
+        }
+
+        /* CARD STACK SCROLL CONTAINER */
+        .stack-container {
+            position: relative;
+            height: 400vh;
+            perspective: 2000px;
+        }
+        .stack-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .stack-card {
+            position: absolute;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 24px;
+            opacity: 0;
+            transform: translateZ(-1000px) rotateX(10deg);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform, opacity;
+        }
+        .stack-card.active {
+            opacity: 1;
+            transform: translateZ(0) rotateX(0deg);
+        }
+        .stack-card.prev {
+            opacity: 0.3;
+            transform: translateZ(-500px) scale(0.9);
+        }
+
+        /* ASYNCHRONOUS BENTO SCROLLING */
+        .async-bento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            position: relative;
+        }
+        .async-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .async-item {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+        .async-col:nth-child(1) .async-item { transform: translateY(0px); }
+        .async-col:nth-child(2) .async-item { transform: translateY(-30px); }
+        .async-col:nth-child(3) .async-item { transform: translateY(-60px); }
 
         /* Hero Section */
         .hero {
@@ -89,6 +218,7 @@
             position: relative;
             padding-top: 60px;
             padding-bottom: 60px;
+            overflow: hidden;
         }
         .hero::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -96,10 +226,14 @@
                         radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
             animation: float 20s ease-in-out infinite; z-index: 1;
         }
-        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-20px) rotate(1deg); } 66% { transform: translateY(-10px) rotate(-1deg); } }
+        @keyframes float { 
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 
+            33% { transform: translate3d(0, -20px, 0) rotate(1deg); } 
+            66% { transform: translate3d(0, -10px, 0) rotate(-1deg); } 
+        }
 
         .hero-content { position: relative; z-index: 2; width: 100%; animation: slideInUp 1s ease-out; }
-        @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInUp { from { opacity: 0; transform: translate3d(0, 40px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
         .headline {
             font-size: clamp(2rem, 4.5vw, 3.8rem);
@@ -112,7 +246,7 @@
             background-clip: text;
         }
 
-        /* Concrete Example (Leak vs Fix) - GLASSMORPHISM + 3D HOVER */
+        /* Concrete Example - GLASSMORPHISM + 3D HOVER (Optimized) */
         .example-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -125,8 +259,8 @@
             border-radius: 24px;
             position: relative;
             overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
         }
         .example-col.leak {
             background: rgba(255, 107, 107, 0.08);
@@ -141,17 +275,8 @@
             -webkit-backdrop-filter: blur(20px);
         }
         .example-col:hover {
-            transform: translateY(-10px) rotateX(5deg) scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
-                        0 0 40px rgba(255, 255, 255, 0.1);
-        }
-        .example-col.leak:hover {
-            box-shadow: 0 30px 60px rgba(255, 107, 107, 0.3),
-                        0 0 40px rgba(255, 107, 107, 0.2);
-        }
-        .example-col.fix:hover {
-            box-shadow: 0 30px 60px rgba(37, 211, 102, 0.3),
-                        0 0 40px rgba(37, 211, 102, 0.2);
+            transform: translate3d(0, -10px, 0) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 255, 255, 0.1);
         }
 
         .col-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -175,18 +300,20 @@
         .leak .result-badge { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
         .fix .result-badge { background: rgba(37, 211, 102, 0.2); color: #25D366; }
 
-        /* Buttons */
+        /* Buttons (Optimized) */
         .cta-button {
             display: inline-flex; align-items: center; justify-content: center; gap: 12px;
             color: white; width: 100%; max-width: 420px;
             padding: 18px 32px; border-radius: 50px; font-size: 1.15rem; font-weight: 600; text-decoration: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
             position: relative; overflow: hidden; border: none; cursor: pointer; margin-bottom: 16px;
+            will-change: transform;
         }
         .cta-button.whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
-        .cta-button.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(37, 211, 102, 0.4); }
+        .cta-button.whatsapp:hover { transform: translate3d(0, -3px, 0); box-shadow: 0 25px 50px rgba(37, 211, 102, 0.4); }
         .cta-button.email { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .cta-button.email:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4); }
+        .cta-button.email:hover { transform: translate3d(0, -3px, 0); box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4); }
 
         .cta-button::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -199,7 +326,7 @@
         .section-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; text-align: center; }
         .section-subtitle { text-align: center; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 3rem; }
 
-        /* Problems/Stats - GLASSMORPHISM + 3D CARDS */
+        /* Stats Grid - Optimized 3D Cards */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .stat-card {
             background: rgba(255,255,255,0.03);
@@ -208,37 +335,24 @@
             border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
             transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
         }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.6s;
-        }
-        .stat-card:hover::before { left: 100%; }
         .stat-card:hover {
-            transform: translateY(-10px) rotateX(5deg) scale(1.03);
+            transform: translate3d(0, -10px, 0) scale(1.03);
             border-color: rgba(255,255,255,0.3);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
-                        0 0 40px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(102, 126, 234, 0.2);
         }
         .stat-icon { font-size: 2rem; margin-bottom: 15px; }
         .stat-head { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: #a8b8ff; }
         .stat-desc { font-size: 0.95rem; color: rgba(255,255,255,0.6); }
 
-        /* How It Works - BENTO GRID ANIMATION */
+        /* How It Works - Async Bento Grid */
         .how-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
             position: relative; 
         }
         .step-card { 
@@ -251,11 +365,11 @@
             border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            will-change: transform;
         }
         .step-card:hover {
-            transform: translateY(-15px) scale(1.05);
+            transform: translate3d(0, -15px, 0) scale(1.05);
             border-color: rgba(102, 126, 234, 0.5);
             box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3);
         }
@@ -276,21 +390,19 @@
         .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
         .step-desc { color: rgba(255,255,255,0.7); }
 
-        /* Guarantee Section - GLASSMORPHISM */
+        /* Guarantee Section */
         .guarantee-box {
             background: rgba(255, 215, 0, 0.05);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 215, 0, 0.3);
-            border-top: 1px solid rgba(255, 215, 0, 0.5);
-            border-left: 1px solid rgba(255, 215, 0, 0.5);
             border-radius: 32px;
             padding: 60px;
             text-align: center;
             margin-top: 40px;
             position: relative;
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
             box-shadow: 0 20px 60px rgba(255, 215, 0, 0.15);
         }
         .guarantee-box:hover {
@@ -302,24 +414,19 @@
         .guarantee-text { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 15px; }
         .guarantee-sub { font-size: 1.1rem; color: rgba(255,255,255,0.8); }
 
-        /* Background Elements */
-        .lottie-3d { position: absolute; width: 400px; height: 400px; opacity: 0.08; z-index: 0; pointer-events: none; }
-        .lottie-3d.left { top: 10%; left: -10%; }
-        .lottie-3d.right { bottom: 10%; right: -10%; }
-
         /* Animations */
-        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .fade-in { opacity: 0; transform: translate3d(0, 30px, 0); transition: all 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translate3d(0, 0, 0); }
 
-        /* BENTO GRID ANIMATION - Stagger effect on scroll */
+        /* BENTO GRID ANIMATION */
         .bento-item {
             opacity: 0;
-            transform: translateY(50px) scale(0.9);
+            transform: translate3d(0, 50px, 0) scale(0.9);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .bento-item.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
         }
 
         @media (max-width: 768px) {
@@ -328,6 +435,9 @@
             .section-title { font-size: 1.8rem; }
             .guarantee-box { padding: 30px 20px; }
             .guarantee-text { font-size: 1.4rem; }
+            .how-grid, .async-bento { grid-template-columns: 1fr; }
+            .async-col:nth-child(2) .async-item, .async-col:nth-child(3) .async-item { transform: translateY(0); }
+            .stack-container { height: 300vh; }
         }
     </style>
 </head>
@@ -338,10 +448,38 @@
     <!-- Transparent Animated Orbs -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
+
+    <!-- Scrollytelling Tree Container -->
+    <div class="scrolly-tree">
+        <div class="tree-trunk" id="treeTrunk"></div>
+        <div class="tree-branches" id="treeBranches"></div>
+        <div class="tree-leaves" id="treeLeaves"></div>
+    </div>
+
+    <!-- CARD STACK SCROLL SECTION -->
+    <div class="stack-container" id="stackContainer">
+        <div class="stack-wrapper">
+            <div class="stack-card glass" data-index="0">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px;">🎯 Instant Response</h3>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.8;">Leads expect replies within 5 minutes. Our system responds instantly via WhatsApp, capturing attention before competitors.</p>
+            </div>
+            <div class="stack-card glass" data-index="1">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px;">🔄 Smart Follow-ups</h3>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.8;">Automated sequences nurture leads at 10min, 24h, and 72h intervals—ensuring no prospect slips through cracks.</p>
+            </div>
+            <div class="stack-card glass" data-index="2">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px;">📊 Track & Optimize</h3>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.8;">Real-time analytics show response times, conversion rates, and recovered revenue—proving ROI clearly.</p>
+            </div>
+            <div class="stack-card glass" data-index="3">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px;">💰 Revenue Recovery</h3>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.8;">Turn cold leads into closed deals. Average clients recover 30-40% of previously lost opportunities.</p>
+            </div>
+        </div>
+    </div>
+    <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <lottie-player class="lottie-3d left" src="https://assets4.lottiefiles.com/packages/lf20_tss3upjt.json" background="transparent" speed="0.5" loop autoplay></lottie-player>
-    <lottie-player class="lottie-3d right" src="https://assets1.lottiefiles.com/packages/lf20_yf3kcmhw.json" background="transparent" speed="0.3" loop autoplay></lottie-player>
 
     <section class="hero">
         <div class="container">
