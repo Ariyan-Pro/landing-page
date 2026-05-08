@@ -1,0 +1,1392 @@
+--- index.html (原始)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Real Estate Lead Recovery Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120,119,198,0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite; z-index: 1;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-20px) rotate(1deg); } 66% { transform: translateY(-10px) rotate(-1deg); } }
+
+        .hero-content { position: relative; z-index: 2; width: 100%; animation: slideInUp 1s ease-out; }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        .headline {
+            font-size: clamp(2rem, 4.5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff 0%, #a8b8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Concrete Example (Leak vs Fix) */
+        .example-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .example-col { padding: 20px; border-radius: 16px; position: relative; overflow: hidden; }
+        .example-col.leak { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); }
+        .example-col.fix { background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3); }
+
+        .col-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .leak .col-title { color: #ff6b6b; }
+        .fix .col-title { color: #25D366; }
+
+        .timeline { position: relative; padding-left: 20px; border-left: 2px dashed rgba(255,255,255,0.2); margin-left: 10px; }
+        .timeline-item { margin-bottom: 15px; position: relative; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -26px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #555;
+        }
+        .leak .timeline-item:last-child::before { background: #ff6b6b; box-shadow: 0 0 10px #ff6b6b; }
+        .fix .timeline-item::before { background: #25D366; }
+        .fix .timeline-item:last-child::before { background: #25D366; box-shadow: 0 0 10px #25D366; }
+
+        .time-stamp { font-size: 0.85rem; color: rgba(255,255,255,0.6); font-family: monospace; }
+        .event-desc { font-size: 0.95rem; font-weight: 500; }
+        .result-badge {
+            display: inline-block; margin-top: 5px; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;
+        }
+        .leak .result-badge { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+        .fix .result-badge { background: rgba(37, 211, 102, 0.2); color: #25D366; }
+
+        /* Buttons */
+        .cta-button {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            color: white; width: 100%; max-width: 420px;
+            padding: 18px 32px; border-radius: 50px; font-size: 1.15rem; font-weight: 600; text-decoration: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden; border: none; cursor: pointer; margin-bottom: 16px;
+        }
+        .cta-button.whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
+        .cta-button.whatsapp:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(37, 211, 102, 0.4); }
+        .cta-button.email { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .cta-button.email:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4); }
+
+        .cta-button::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.6s;
+        }
+        .cta-button:hover::before { left: 100%; }
+
+        /* Sections */
+        .section { padding: 100px 0; position: relative; }
+        .section-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; text-align: center; }
+        .section-subtitle { text-align: center; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 3rem; }
+
+        /* Problems/Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .stat-card {
+            background: rgba(255,255,255,0.03); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .stat-icon { font-size: 2rem; margin-bottom: 15px; }
+        .stat-head { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: #a8b8ff; }
+        .stat-desc { font-size: 0.95rem; color: rgba(255,255,255,0.6); }
+
+        /* How It Works */
+        .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; position: relative; }
+        .step-card { text-align: center; position: relative; z-index: 2; }
+        .step-number {
+            width: 60px; height: 60px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800;
+            margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+        .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .step-desc { color: rgba(255,255,255,0.7); }
+
+        /* Guarantee Section */
+        .guarantee-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.02));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 24px; padding: 50px; text-align: center; margin-top: 40px;
+            position: relative; overflow: hidden;
+        }
+        .guarantee-icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .guarantee-text { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 15px; }
+        .guarantee-sub { font-size: 1.1rem; color: rgba(255,255,255,0.8); }
+
+        /* Background Elements */
+        .lottie-3d { position: absolute; width: 400px; height: 400px; opacity: 0.08; z-index: 0; pointer-events: none; }
+        .lottie-3d.left { top: 10%; left: -10%; }
+        .lottie-3d.right { bottom: 10%; right: -10%; }
+
+        /* Animations */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hero { padding-top: 100px; padding-bottom: 40px; min-height: auto; }
+            .example-container { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.8rem; }
+            .guarantee-box { padding: 30px 20px; }
+            .guarantee-text { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <lottie-player class="lottie-3d left" src="https://assets4.lottiefiles.com/packages/lf20_tss3upjt.json" background="transparent" speed="0.5" loop autoplay></lottie-player>
+    <lottie-player class="lottie-3d right" src="https://assets1.lottiefiles.com/packages/lf20_yf3kcmhw.json" background="transparent" speed="0.3" loop autoplay></lottie-player>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="headline fade-in">Dubai real estate leads going cold? I revive buyers/sellers who already messaged you but never replied again.</h1>
+
+                <!-- Concrete Example: Leak vs Fix -->
+                <div class="example-container fade-in">
+                    <!-- The Leak -->
+                    <div class="example-col leak">
+                        <div class="col-title"><span style="font-size:1.2rem">⚠️</span> Typical Leak</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Gap: 4h 30m</div>
+                                <div class="event-desc">Lead waits (or goes to competitor)</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 6:40 PM</div>
+                                <div class="event-desc">Agent responds manually</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Deal probability collapses</div>
+                    </div>
+
+                    <!-- The Fix -->
+                    <div class="example-col fix">
+                        <div class="col-title"><span style="font-size:1.2rem">⚡</span> The Fix</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 0 min</div>
+                                <div class="event-desc">Instant WhatsApp Auto-Reply</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Follow-up: 10m, 24h</div>
+                                <div class="event-desc">Smart sequence engagement</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Lead captured & qualified</div>
+                    </div>
+                </div>
+
+                <!-- Contact Options -->
+                <div style="max-width: 450px; margin: 0 auto;">
+                    <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp fade-in">
+                        <span>📱</span> WhatsApp Me Now (Instant)
+                    </a>
+                    <button onclick="openEmail()" class="cta-button email fade-in">
+                        <span>✉️</span> Email Me Instead
+                    </button>
+                    <p style="text-align: center; font-size: 0.85rem; opacity: 0.6; margin-top: 15px;">
+                        Built for fast response + follow-up systems (WhatsApp/email/forms). Focus: Response time & missed inquiries.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem (Credibility without fake client numbers) -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">The cost of slow response</h2>
+            <p class="section-subtitle fade-in">Industry standards highlight exactly where revenue is lost before you even speak to the prospect.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">🐢</div>
+                    <div class="stat-head">The 5-Minute Rule</div>
+                    <div class="stat-desc">Odds of qualifying a lead drop 400% if you wait longer than 5 minutes to respond.</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-head">The Chase Ends Fast</div>
+                    <div class="stat-desc">78% of buyers choose the vendor who responds to their inquiry first.</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">📵</div>
+                    <div class="stat-head">The Silent Drop-off</div>
+                    <div class="stat-desc">Most businesses fail to follow up more than twice, yet 80% of sales happen after 5 contacts.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <h2 class="section-title fade-in">How the 7-day audit works</h2>
+            <p class="section-subtitle fade-in">A simple, surgical approach to plugging the leaks in your funnel.</p>
+
+            <div class="how-grid">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Map Leaks</h3>
+                    <p class="step-desc">We analyze exactly where leads drop across your Forms, WhatsApp, and DMs.</p>
+                </div>
+                <div class="step-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Install Fix</h3>
+                    <p class="step-desc">I install an instant reply mechanism + 2 smart follow-ups tailored to your business.</p>
+                </div>
+                <div class="step-card fade-in" style="transition-delay: 0.4s;">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Track It</h3>
+                    <p class="step-desc">We compare the before/after response times to prove the recovery of lost revenue.</p>
+                </div>
+            </div>
+
+            <!-- Guarantee -->
+            <div class="guarantee-box fade-in">
+                <span class="guarantee-icon">🛡️</span>
+                <div class="guarantee-text">Risk-Free Guarantee</div>
+                <div class="guarantee-sub">“If I can’t show at least one clear leak in 24 hours, you don’t proceed.”</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="section" style="padding-bottom: 120px;">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title fade-in">Ready to fix your lead response?</h2>
+            <p class="section-subtitle fade-in">Stop letting inquiries go cold. Start the audit today.</p>
+
+            <div style="max-width: 450px; margin: 0 auto;">
+                <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp fade-in">
+                    <span>📱</span> Get Free Audit (WhatsApp)
+                </a>
+                <button onclick="openEmail()" class="cta-button email fade-in">
+                    <span>✉️</span> Email Audit Request
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // WhatsApp Logic with new pre-filled text
+        function openWhatsApp() {
+            const text = "Hi Ariyan — audit my lead response. Here’s how leads come in: [form/WhatsApp/ads].";
+            const encodedText = encodeURIComponent(text);
+            const url = `https://wa.me/923214659149?text=${encodedText}`;
+            window.open(url, '_blank');
+        }
+
+        // Email Logic with new pre-filled subject
+        function openEmail() {
+            const subject = encodeURIComponent('Audit my lead response — [Business Name]');
+            const body = encodeURIComponent('Hi Ariyan,\n\nI want to audit my lead response system.\n\nBest regards,');
+            window.location.href = `mailto:ariyan.nadeem.01@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.lottie-3d').forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
+
++++ index.html (修改后)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Real Estate Lead Recovery Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-green: #25D366;
+            --accent-red: #ff4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(30, 30, 30, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(20, 20, 20, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(15, 15, 15, 0.5) 0%, transparent 70%);
+            z-index: -2;
+            animation: pulseBg 15s ease-in-out infinite;
+        }
+
+        @keyframes pulseBg {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatParticle 20s infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 16s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Glassmorphism Base Class */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-radius: 24px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tree Animation Container */
+        .tree-container {
+            position: relative;
+            padding: 100px 0;
+        }
+
+        .tree-trunk {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 10%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.2) 90%,
+                transparent 100%);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .tree-node {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--bg-primary);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
+
+        .tree-node.active {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            background: var(--accent-green);
+        }
+
+        .tree-branch {
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
+            transform-origin: left center;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .tree-branch.left {
+            left: 50%;
+            transform: translateX(-100%) rotate(180deg);
+        }
+
+        .tree-branch.right {
+            left: 50%;
+            transform: translateX(0);
+        }
+
+        .tree-branch.extended {
+            width: calc(50% - 120px);
+        }
+
+        .tree-content {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(50% - 150px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tree-content.left {
+            right: calc(50% + 100px);
+            text-align: right;
+        }
+
+        .tree-content.right {
+            left: calc(50% + 100px);
+            text-align: left;
+        }
+
+        .tree-content.visible {
+            opacity: 1;
+        }
+
+        .tree-content.left.visible {
+            transform: translateY(-50%) translateX(-20px);
+        }
+
+        .tree-content.right.visible {
+            transform: translateY(-50%) translateX(20px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .headline {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff 0%, #d0d0d0 50%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .subheadline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 700px;
+        }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, minmax(200px, auto));
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .bento-item {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .bento-item:hover::before {
+            opacity: 1;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .bento-large {
+            grid-column: span 2;
+        }
+
+        .bento-tall {
+            grid-row: span 2;
+        }
+
+        .bento-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .bento-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .bento-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .bento-stat {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Concrete Example (Leak vs Fix) */
+        .example-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .example-col {
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-col.leak {
+            background: rgba(255, 68, 68, 0.05);
+            border: 1px solid rgba(255, 68, 68, 0.2);
+        }
+
+        .example-col.fix {
+            background: rgba(37, 211, 102, 0.05);
+            border: 1px solid rgba(37, 211, 102, 0.2);
+        }
+
+        .col-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .leak .col-title { color: var(--accent-red); }
+        .fix .col-title { color: var(--accent-green); }
+
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px dashed rgba(255,255,255,0.15);
+            margin-left: 12px;
+        }
+
+        .timeline-item {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .leak .timeline-item:last-child::before {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+        }
+
+        .fix .timeline-item::before {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-green);
+        }
+
+        .fix .timeline-item:last-child::before {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
+        }
+
+        .time-stamp {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            font-family: 'SF Mono', 'Monaco', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .event-desc {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .result-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .leak .result-badge {
+            background: rgba(255, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
+        .fix .result-badge {
+            background: rgba(37, 211, 102, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+
+        /* Buttons */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: white;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px 36px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .cta-button.whatsapp {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #128C7E 100%);
+        }
+
+        .cta-button.whatsapp:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-button.email {
+            background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cta-button.email:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button span {
+            filter: grayscale(0);
+            transition: filter 0.3s ease;
+        }
+
+        .cta-button:hover span {
+            filter: grayscale(0.3);
+        }
+
+        /* Sections */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            padding: 35px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-head {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .stat-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            position: relative;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 40px 30px;
+        }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #222, #111);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Guarantee Section */
+        .guarantee-box {
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guarantee-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.03) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .guarantee-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .guarantee-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .guarantee-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .guarantee-sub {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-reveal.from-left {
+            transform: translateX(-50px);
+        }
+
+        .scroll-reveal.from-right {
+            transform: translateX(50px);
+        }
+
+        .scroll-reveal.from-left.visible,
+        .scroll-reveal.from-right.visible {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bento-large {
+                grid-column: span 2;
+            }
+
+            .tree-container {
+                padding: 60px 0;
+            }
+
+            .tree-content {
+                width: calc(50% - 100px);
+            }
+
+            .tree-content.left {
+                right: calc(50% + 60px);
+            }
+
+            .tree-content.right {
+                left: calc(50% + 60px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 80px;
+                padding-bottom: 60px;
+                min-height: auto;
+            }
+
+            .headline {
+                font-size: 2rem;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .bento-large, .bento-tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .example-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .guarantee-box {
+                padding: 40px 25px;
+            }
+
+            .guarantee-text {
+                font-size: 1.5rem;
+            }
+
+            .tree-trunk {
+                display: none;
+            }
+
+            .tree-node {
+                display: none;
+            }
+
+            .tree-branch {
+                display: none;
+            }
+
+            .tree-content {
+                position: relative;
+                width: 100%;
+                left: auto !important;
+                right: auto !important;
+                text-align: left !important;
+                transform: none !important;
+                margin-bottom: 40px;
+            }
+
+            .tree-content.visible {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles Background -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="headline scroll-reveal">Dubai real estate leads going cold? I revive buyers/sellers who already messaged you but never replied again.</h1>
+                <p class="subheadline scroll-reveal">Stop letting inquiries go cold. Start the audit today.</p>
+
+                <!-- Bento Grid Stats -->
+                <div class="bento-grid">
+                    <div class="bento-item bento-large glass scroll-reveal">
+                        <div class="bento-icon">⚡</div>
+                        <div>
+                            <div class="bento-title">Instant Response</div>
+                            <div class="bento-desc">Zero delay between inquiry and first contact</div>
+                        </div>
+                    </div>
+                    <div class="bento-item glass scroll-reveal">
+                        <div class="bento-stat">78%</div>
+                        <div class="bento-desc">Buyers choose who responds first</div>
+                    </div>
+                    <div class="bento-item glass scroll-reveal">
+                        <div class="bento-stat">5min</div>
+                        <div class="bento-desc">Critical response window</div>
+                    </div>
+                    <div class="bento-item bento-tall glass scroll-reveal">
+                        <div class="bento-icon">🔄</div>
+                        <div>
+                            <div class="bento-title">Smart Follow-ups</div>
+                            <div class="bento-desc">Automated sequences that nurture leads until they're ready to convert</div>
+                        </div>
+                    </div>
+                    <div class="bento-item glass scroll-reveal">
+                        <div class="bento-stat">400%</div>
+                        <div class="bento-desc">Drop in qualification odds after 5 minutes</div>
+                    </div>
+                </div>
+
+                <!-- Concrete Example: Leak vs Fix -->
+                <div class="example-container glass scroll-reveal">
+                    <!-- The Leak -->
+                    <div class="example-col leak">
+                        <div class="col-title"><span style="font-size:1.2rem">⚠️</span> Typical Leak</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Gap: 4h 30m</div>
+                                <div class="event-desc">Lead waits (or goes to competitor)</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 6:40 PM</div>
+                                <div class="event-desc">Agent responds manually</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Deal probability collapses</div>
+                    </div>
+
+                    <!-- The Fix -->
+                    <div class="example-col fix">
+                        <div class="col-title"><span style="font-size:1.2rem">⚡</span> The Fix</div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-stamp">Inquiry: 2:10 PM</div>
+                                <div class="event-desc">Lead submits form</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Reply: 0 min</div>
+                                <div class="event-desc">Instant WhatsApp Auto-Reply</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-stamp">Follow-up: 10m, 24h</div>
+                                <div class="event-desc">Smart sequence engagement</div>
+                            </div>
+                        </div>
+                        <div class="result-badge">Lead captured & qualified</div>
+                    </div>
+                </div>
+
+                <!-- Contact Options -->
+                <div style="max-width: 450px; margin: 0 auto;">
+                    <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp scroll-reveal">
+                        <span>📱</span> WhatsApp Me Now (Instant)
+                    </a>
+                    <button onclick="openEmail()" class="cta-button email scroll-reveal">
+                        <span>✉️</span> Email Me Instead
+                    </button>
+                    <p style="text-align: center; font-size: 0.85rem; opacity: 0.6; margin-top: 15px;">
+                        Built for fast response + follow-up systems (WhatsApp/email/forms). Focus: Response time & missed inquiries.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem (Credibility without fake client numbers) -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">The cost of slow response</h2>
+            <p class="section-subtitle scroll-reveal">Industry standards highlight exactly where revenue is lost before you even speak to the prospect.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card glass scroll-reveal from-left">
+                    <div class="stat-icon">🐢</div>
+                    <div class="stat-head">The 5-Minute Rule</div>
+                    <div class="stat-desc">Odds of qualifying a lead drop 400% if you wait longer than 5 minutes to respond.</div>
+                </div>
+                <div class="stat-card glass scroll-reveal">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-head">The Chase Ends Fast</div>
+                    <div class="stat-desc">78% of buyers choose the vendor who responds to their inquiry first.</div>
+                </div>
+                <div class="stat-card glass scroll-reveal from-right">
+                    <div class="stat-icon">📵</div>
+                    <div class="stat-head">The Silent Drop-off</div>
+                    <div class="stat-desc">Most businesses fail to follow up more than twice, yet 80% of sales happen after 5 contacts.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works - Tree Timeline Section -->
+    <section class="tree-container">
+        <div class="tree-trunk"></div>
+
+        <!-- Step 1 -->
+        <div class="tree-node" style="top: 80px;"></div>
+        <div class="tree-branch left" data-node="0"></div>
+        <div class="tree-content left glass scroll-reveal from-left">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Map Leaks</h3>
+                <p class="step-desc">We analyze exactly where leads drop across your Forms, WhatsApp, and DMs.</p>
+            </div>
+        </div>
+        <div class="tree-branch right" data-node="0"></div>
+        <div class="tree-content right glass scroll-reveal from-right">
+            <div class="bento-item glass" style="padding: 25px;">
+                <div class="bento-icon">🔍</div>
+                <div class="bento-title">Deep Analysis</div>
+                <div class="bento-desc">Every touchpoint examined for conversion leaks</div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="tree-node" style="top: 280px;"></div>
+        <div class="tree-branch left" data-node="1"></div>
+        <div class="tree-content left glass scroll-reveal from-left">
+            <div class="bento-item glass" style="padding: 25px;">
+                <div class="bento-icon">⚙️</div>
+                <div class="bento-title">Auto-Reply Setup</div>
+                <div class="bento-desc">Instant responses on all channels</div>
+            </div>
+        </div>
+        <div class="tree-branch right" data-node="1"></div>
+        <div class="tree-content right glass scroll-reveal from-right">
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Install Fix</h3>
+                <p class="step-desc">I install an instant reply mechanism + 2 smart follow-ups tailored to your business.</p>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="tree-node" style="top: 480px;"></div>
+        <div class="tree-branch left" data-node="2"></div>
+        <div class="tree-content left glass scroll-reveal from-left">
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Track It</h3>
+                <p class="step-desc">We compare the before/after response times to prove the recovery of lost revenue.</p>
+            </div>
+        </div>
+        <div class="tree-branch right" data-node="2"></div>
+        <div class="tree-content right glass scroll-reveal from-right">
+            <div class="bento-item glass" style="padding: 25px;">
+                <div class="bento-stat">📊</div>
+                <div class="bento-title">Live Dashboard</div>
+                <div class="bento-desc">Real-time metrics showing recovered leads</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section -->
+    <section class="section">
+        <div class="container">
+            <div class="guarantee-box glass scroll-reveal">
+                <div class="guarantee-content">
+                    <span class="guarantee-icon">🛡️</span>
+                    <div class="guarantee-text">Risk-Free Guarantee</div>
+                    <div class="guarantee-sub">"If I can't show at least one clear leak in 24 hours, you don't proceed."</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Final CTA -->
+    <section class="section" style="padding-bottom: 120px;">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title scroll-reveal">Ready to fix your lead response?</h2>
+            <p class="section-subtitle scroll-reveal">Stop letting inquiries go cold. Start the audit today.</p>
+
+            <div style="max-width: 450px; margin: 0 auto;">
+                <a href="#" onclick="openWhatsApp(); return false;" class="cta-button whatsapp scroll-reveal">
+                    <span>📱</span> Get Free Audit (WhatsApp)
+                </a>
+                <button onclick="openEmail()" class="cta-button email scroll-reveal">
+                    <span>✉️</span> Email Audit Request
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // WhatsApp Logic with new pre-filled text
+        function openWhatsApp() {
+            const text = "Hi Ariyan — audit my lead response. Here’s how leads come in: [form/WhatsApp/ads].";
+            const encodedText = encodeURIComponent(text);
+            const url = `https://wa.me/923214659149?text=${encodedText}`;
+            window.open(url, '_blank');
+        }
+
+        // Email Logic with new pre-filled subject
+        function openEmail() {
+            const subject = encodeURIComponent('Audit my lead response — [Business Name]');
+            const body = encodeURIComponent('Hi Ariyan,\n\nI want to audit my lead response system.\n\nBest regards,');
+            window.location.href = `mailto:ariyan.nadeem.01@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        // Scroll Animations with Tree Branch Extension
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Extend tree branches when content becomes visible
+                    const treeNode = entry.target.closest('.tree-content');
+                    if (treeNode) {
+                        const nodeIndex = Array.from(document.querySelectorAll('.tree-content')).indexOf(treeNode);
+                        const branches = document.querySelectorAll(`.tree-branch[data-node="${Math.floor(nodeIndex/2)}"]`);
+                        branches.forEach(branch => branch.classList.add('extended'));
+
+                        // Activate corresponding tree node
+                        const nodes = document.querySelectorAll('.tree-node');
+                        if (nodes[Math.floor(nodeIndex/2)]) {
+                            nodes[Math.floor(nodeIndex/2)].classList.add('active');
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Smooth scroll effect for tree trunk glow
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const treeTrunk = document.querySelector('.tree-trunk');
+            if (treeTrunk) {
+                treeTrunk.style.background = `linear-gradient(180deg,
+                    transparent 0%,
+                    rgba(37, 211, 102, ${0.1 + Math.min(scrolled / 1000, 0.3)}) 10%,
+                    rgba(37, 211, 102, ${0.2 + Math.min(scrolled / 800, 0.4)}) 50%,
+                    rgba(37, 211, 102, ${0.1 + Math.min(scrolled / 1000, 0.3)}) 90%,
+                    transparent 100%)`;
+            }
+        });
+    </script>
+</body>
+</html>
