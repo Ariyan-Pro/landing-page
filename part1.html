@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariyan Nadeem — The Story | Part I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --gold: #c9973a;
+    --gold-light: #e8c06a;
+    --rust: #8b3a1e;
+    --cream: #faf7f0;
+    --muted: #6b6357;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease, background 0.2s ease;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+  }
+
+  .cursor.hover {
+    transform: scale(2.5);
+    background: rgba(201, 151, 58, 0.2);
+    border-color: transparent;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 1000;
+    transition: width 0.1s ease;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,151,58,0.2);
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-parts {
+    display: flex; gap: 2rem;
+  }
+  .nav-parts a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+  }
+  .nav-parts a:hover, .nav-parts a.active { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 6rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(139,58,30,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 60%, rgba(201,151,58,0.12) 0%, transparent 60%),
+      linear-gradient(160deg, #0d0d0d 0%, #1a1208 50%, #0d0d0d 100%);
+  }
+  .part-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,0.6);
+    margin-top: 1.5rem;
+    max-width: 500px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── CHAPTER ── */
+  .chapter {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8rem 3rem;
+  }
+  .chapter-header {
+    display: flex; align-items: flex-start; gap: 3rem;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201,151,58,0.2);
+  }
+  .chapter-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(201,151,58,0.1);
+    line-height: 1;
+    min-width: 120px;
+    letter-spacing: -0.04em;
+  }
+  .chapter-info { flex: 1; padding-top: 1.5rem; }
+  .chapter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .chapter-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ── PROSE ── */
+  .prose p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.85);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .prose p.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .prose p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 0.85;
+    float: left;
+    margin-right: 0.12em;
+    margin-top: 0.05em;
+    color: var(--gold);
+  }
+  .prose strong { font-weight: 600; color: var(--paper); }
+  .prose em { font-style: italic; color: rgba(245,240,232,0.7); }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 3.5rem 0;
+    padding: 2.5rem 3rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(201,151,58,0.06);
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .pull-quote.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: rgba(201,151,58,0.2);
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    line-height: 1;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem !important;
+    font-style: italic;
+    color: var(--paper) !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+  .pull-quote p::first-letter { all: unset !important; }
+
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+  .stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── PAGE NAV ── */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    border-top: 1px solid rgba(201,151,58,0.2);
+    margin-top: 4rem;
+  }
+  .page-nav-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .page-nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: gap 0.3s ease;
+  }
+  .page-nav a:hover {
+    color: var(--gold-light);
+  }
+
+  /* ── GLASS CARD ── */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px var(--glass-shadow);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .cursor, .cursor-dot { display: none; }
+    * { cursor: auto !important; }
+    
+    nav { padding: 1rem 1.5rem; }
+    .nav-parts { display: none; }
+    
+    .hero { padding: 0 2rem 4rem; }
+    .chapter { padding: 4rem 1.5rem; }
+    .chapter-header { flex-direction: column; gap: 1rem; }
+    .chapter-number { font-size: 5rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .page-nav { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Ariyan Nadeem — The Story</div>
+    <div class="nav-parts">
+      <a href="part1.html" class="active">Part I</a>
+      <a href="part2.html">Part II</a>
+      <a href="part3.html">Part III</a>
+      <a href="part4.html">Part IV</a>
+      <a href="part5.html">Part V</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <p class="part-label">Part I of V — The Foundation</p>
+      <h1 class="hero-title">The Quiet Beginnings<br><em>of Something Greater</em></h1>
+      <p class="hero-subtitle">Before the code, before the companies, before the vision—there was curiosity. And that curiosity would change everything.</p>
+      <div class="scroll-hint">
+        <span>SCROLL TO BEGIN</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Ariyan Nadeem — The Story</div>
+  <div class="nav-parts">
+    <a href="story_part1.html" class="active">Part I</a>
+    <a href="story_part2.html">Part II</a>
+    <a href="story_part3.html">Part III</a>
+    <a href="story_part4.html">Part IV</a>
+    <a href="story_part5.html">Part V</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative; z-index:2;">
+    <div class="part-label">Part One · Pages 1 &amp; 2</div>
+    <h1 class="hero-title">
+      The Boy<br>
+      <em>Who Chose</em><br>
+      The Machine
+    </h1>
+    <p class="hero-subtitle">A story of a young engineer from Lahore who built production-grade AI systems before he could legally sign a contract.</p>
+  </div>
+  <div class="hero-meta" style="position:absolute;">
+    <div class="location">📍 Lahore, Pakistan</div>
+    <div class="role">AI Systems Engineer · Self-Employed</div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PAGE 1 -->
+<main>
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">01</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page One · The Origin</div>
+      <h2 class="chapter-title">A Name, A City,<br><em>A Mission</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      There is a certain kind of person who arrives at a craft not through formal invitation, but through an almost gravitational pull — as if the work had always been waiting, and they just had to find the door. <strong>Ariyan Nadeem</strong> is one of those people. Born and raised in Lahore, Pakistan — a city ancient in culture, loud in ambition, and quietly becoming a hotbed of technological talent — Ariyan grew up at the intersection of rich intellectual tradition and the raw, democratizing power of the internet. His story begins not in a prestigious university lab, not in a well-funded startup, but in the simple, determined reality of a young mind that refused to wait for permission.
+    </p>
+
+    <div class="personal-card">
+      <div class="card-row">
+        <span class="card-label">Full Name</span>
+        <span class="card-value">Ariyan Nadeem</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Online Identity</span>
+        <span class="card-value">Ariyan_Pro</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Location</span>
+        <span class="card-value">Lahore, Pakistan</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Contact</span>
+        <span class="card-value">ariyan.nadeem.01@gmail.com</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Phone</span>
+        <span class="card-value">+92 321 4659149</span>
+      </div>
+      <div class="card-row">
+        <span class="card-label">Languages</span>
+        <span class="card-value">Urdu (Native) · English (Fluent) · Japanese (Basic)</span>
+      </div>
+    </div>
+
+    <p>
+      Ariyan is currently enrolled in his Intermediate (Science) studies at <strong>Govt. Islamia Associate College</strong> in Lahore — a program that runs from September 2024 to October 2026, grounding him in applied mathematics and computational foundations. But what makes his story remarkable is that he did not wait for that curriculum to deliver him to the frontier of technology. He built his way there, one project at a time, independently. His education and his career exist in parallel, not in sequence — a rare and telling trait in someone so young.
+    </p>
+
+    <div class="pull-quote">
+      <p>"AI Systems Engineer specializing in deployable, CPU-efficient AI systems, agentic workflows, and ML infrastructure for real-world constraints."</p>
+    </div>
+
+    <p>
+      That is how Ariyan describes himself — not in the aspirational language of a student, but in the precise, delivery-focused language of a practitioner. And the precision matters. Every word in that sentence is a deliberate signal: <em>deployable</em> — not theoretical. <em>CPU-efficient</em> — not cloud-dependent and infinitely funded. <em>Real-world constraints</em> — not benchmark leaderboards. This is a person who builds things that actually run, on actual machines, in actual environments where resources are finite and every millisecond of latency has a cost.
+    </p>
+
+    <p>
+      He operates under the handle <strong>Ariyan_Pro</strong> across platforms like GitHub, LinkedIn, and Hugging Face — a name that carries both identity and intent. It signals something: this is not a hobbyist; this is someone who takes their work seriously, who is already thinking of themselves as a professional even before the industry formally recognizes them. In a field often gatekept by degrees and institutional affiliations, Ariyan chose to let his work speak instead.
+    </p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Languages Spoken</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">Nov '24</span>
+      <span class="stat-label">Career Started</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">Global</span>
+      <span class="stat-label">Remote · Self-Employed</span>
+    </div>
+  </div>
+</article>
+
+<!-- DIVIDER -->
+<div style="max-width:900px;margin:0 auto;padding:0 3rem;">
+  <div class="section-divider">
+    <div class="divider-icon">✦</div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">02</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page Two · The Roots</div>
+      <h2 class="chapter-title">Lahore, the Launchpad,<br><em>and the Language of Machines</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Lahore is not where most people expect to find someone building adversarial machine learning governance systems from scratch. And yet, that contrast — between expectation and reality — is precisely what defines Ariyan's story. Lahore is a city of over thirteen million people, home to Mughal architecture, the hum of rickshaws, and some of Pakistan's most competitive academic institutions. It is a city where ambition runs quietly but deep, and where access to global knowledge, thanks to the internet, has become something of a great equalizer.
+    </p>
+
+    <p>
+      Ariyan grew up within that environment. His schooling at Govt. Islamia Associate College placed him in a rigorous science stream, where mathematics — the bedrock language of computation — became his primary lens. But his real education was happening in parallel: in open-source repositories, in research papers, in the documentation of Python libraries, and in the hands-on experience of building systems that had to actually work. He was not learning <em>about</em> AI; he was <em>practicing</em> it.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Focused on applied mathematics and computational foundations while building production-grade AI systems independently."</p>
+    </div>
+
+    <p>
+      That phrase — "independently" — appears in Ariyan's resume like a quiet declaration of self-reliance. In a field where internships, mentors, and institutional labs open most doors, Ariyan chose to knock on a different kind of door: the one that opens from the inside. He built. He iterated. He shipped. His work history lists himself as his own employer — <em>Self-Employed, Remote, Global</em> — since November 2024. This is not a gap in a CV; this is the story <em>itself</em>.
+    </p>
+
+    <p>
+      He speaks three languages. Urdu is his native tongue — the language in which he thinks, dreams, argues, and laughs. English, in which he is fully fluent, became the language of his professional and technical life; it is the language of Python documentation, of research papers from DeepMind and Anthropic, of Stack Overflow answers and GitHub comments. And then there is Japanese — which he has begun learning at a basic level. That choice is not random. It signals a global ambition, a curiosity about cultures beyond his immediate context, and perhaps the early whisper of a future that extends beyond Pakistan's borders.
+    </p>
+
+    <p>
+      The internet gave Ariyan access to a world-class education that no single institution could offer. Platforms like Kaggle, Forage, and Google's learning resources became his university. Hugging Face became his library and, eventually, his showcase. GitHub became his portfolio and proof of work. He understood early — instinctively — that in the digital age, what you build is more convincing than where you studied. And so he built. Relentlessly. With purpose.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-cell">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">Certifications Earned</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Major Projects Built</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">97%</span>
+        <span class="stat-label">Latency Optimization Achieved</span>
+      </div>
+    </div>
+
+    <p>
+      The world Ariyan inhabits as a technologist is one of sharp constraints: limited compute, no corporate infrastructure, no team of senior engineers to answer questions. He operates on CPUs — not high-end GPU clusters — and he makes that limitation a feature rather than an apology. Where others wait for resources, he optimizes. Where others offload to the cloud, he makes local inference fast enough to run on the edge. This is the discipline of someone who learned technology not in abundance, but in scarcity — and who turned that scarcity into a superpower.
+    </p>
+
+    <p>
+      His story is still being written. He is, by any measure, at the very beginning. But beginnings, when examined closely, reveal everything about direction. And the direction Ariyan has chosen — precise, performance-obsessed, globally oriented, relentlessly self-improving — points toward something extraordinary.
+    </p>
+  </div>
+</article>
+
+<!-- PAGE NAV -->
+<div class="page-nav">
+  <div class="page-nav-info">Part I of V · Pages 1–2</div>
+  <a href="story_part2.html">Continue to Part II →</a>
+</div>
+</main>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+
+  <!-- PAGE NAV -->
+  <div class="page-nav">
+    <div class="page-nav-info">Part I of V · Pages 1–2</div>
+    <a href="part2.html">Continue to Part II →</a>
+  </div>
+  </main>
+
+<script>
+  // Custom Cursor
+  const cursor = document.querySelector('.cursor');
+  const cursorDot = document.querySelector('.cursor-dot');
+  
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+  });
+
+  const interactiveElements = document.querySelectorAll('a, button, .interactive');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Scroll Progress
+  const scrollProgress = document.querySelector('.scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    scrollProgress.style.width = scrolled + '%';
+  });
+
+  // Scroll Animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) e.target.classList.add('visible'); 
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.fade-in, .prose p, .pull-quote, .stat-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
