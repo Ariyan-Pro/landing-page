@@ -252,39 +252,17 @@
   }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
-  <style>
-  :root {
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: rgba(0, 0, 0, 0.3);
-  }
-  * { cursor: none; }
-  .cursor, .cursor-dot { pointer-events: none; z-index: 9999; position: fixed; }
-  .cursor { width: 20px; height: 20px; border: 1px solid var(--gold); border-radius: 50%; transition: transform 0.2s ease, background 0.2s ease; mix-blend-mode: difference; }
-  .cursor-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; z-index: 10000; }
-  .cursor.hover { transform: scale(2.5); background: rgba(201, 151, 58, 0.2); border-color: transparent; }
-  .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 1000; }
-  .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin: 2rem 0; transition: all 0.3s ease; }
-  .glass-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px var(--glass-shadow); transform: translateY(-5px); }
-  .prose p { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .prose p.visible { opacity: 1; transform: translateY(0); }
-  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-  @media (max-width: 768px) { .cursor, .cursor-dot { display: none; } * { cursor: auto !important; } }
-  </style>
+</head>
 <body>
-  <div class="cursor"></div>
-  <div class="cursor-dot"></div>
-  <div class="scroll-progress"></div>
 
 <nav>
   <div class="nav-brand">Ariyan Nadeem — The Story</div>
   <div class="nav-parts">
-    <a href="part1.html">Part I</a>
-    <a href="part2.html">Part II</a>
-    <a href="part3.html">Part III</a>
-    <a href="part4.html" class="active">Part IV</a>
-    <a href="part5.html">Part V</a>
+    <a href="story_part1.html">Part I</a>
+    <a href="story_part2.html">Part II</a>
+    <a href="story_part3.html">Part III</a>
+    <a href="story_part4.html" class="active">Part IV</a>
+    <a href="story_part5.html">Part V</a>
   </div>
 </nav>
 
@@ -422,9 +400,9 @@
 </article>
 
 <div class="page-nav">
-  <a href="part3.html" class="back">← Part III</a>
+  <a href="story_part3.html" class="back">← Part III</a>
   <div class="page-nav-info">Part IV of V · Pages 7–8</div>
-  <a href="part5.html">Continue to Part V →</a>
+  <a href="story_part5.html">Continue to Part V →</a>
 </div>
 </main>
 
@@ -436,5 +414,3 @@
 </script>
 </body>
 </html>
-
-
