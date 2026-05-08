@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariyan Nadeem — The Story | Part V</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #06090f;
+    --paper: #e8f0fa;
+    --blue: #2b5ce6;
+    --blue-light: #6b9bff;
+    --blue-pale: #aac4ff;
+    --amber: #c9973a;
+    --muted: #4a5870;
+    --dark: #0d1220;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(6,9,15,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(43,92,230,0.2);
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--blue-light);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .nav-parts { display: flex; gap: 2rem; }
+  .nav-parts a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s;
+  }
+  .nav-parts a:hover, .nav-parts a.active { color: var(--blue-light); }
+
+  /* ── CINEMATIC HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(43,92,230,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 40% at 10% 20%, rgba(201,151,58,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 90% 80%, rgba(107,155,255,0.1) 0%, transparent 60%),
+      linear-gradient(180deg, #06090f 0%, #0a1228 50%, #06090f 100%);
+  }
+  /* Star field effect */
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(107,155,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 40%, rgba(201,151,58,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 20%, rgba(107,155,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 55%, rgba(201,151,58,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 70%, rgba(107,155,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(201,151,58,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 30%, rgba(107,155,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 75% 10%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 50%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  }
+  .hero-center {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 4rem;
+  }
+  .part-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; color: var(--blue-light);
+    letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 9rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: -0.02em;
+    opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--amber);
+    display: block;
+  }
+  .hero-title .light {
+    color: var(--blue-light);
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 300; font-style: italic;
+    color: rgba(232,240,250,0.6);
+    margin: 2rem auto 0;
+    max-width: 620px;
+    opacity: 0; animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .hero-horizon {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 160px;
+    background: linear-gradient(to top, var(--ink) 0%, transparent 100%);
+    z-index: 2;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    z-index: 3;
+    opacity: 0; animation: fadeUp 1s ease 1.1s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--muted); letter-spacing: 0.2em;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--blue-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── CHAPTERS ── */
+  .chapter {
+    max-width: 920px; margin: 0 auto; padding: 7rem 3rem;
+  }
+  .chapter-header {
+    display: flex; align-items: flex-start; gap: 3rem;
+    margin-bottom: 4rem; padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(43,92,230,0.2);
+  }
+  .chapter-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem; font-weight: 900;
+    color: rgba(43,92,230,0.1); line-height: 1;
+    min-width: 120px; letter-spacing: -0.04em;
+  }
+  .chapter-info { flex: 1; padding-top: 1.5rem; }
+  .chapter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--blue-light);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.7rem;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+  }
+  .chapter-title em { font-style: italic; color: var(--blue-light); }
+  .chapter-title .amber { color: var(--amber); }
+
+  .prose p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 300;
+    line-height: 1.85; color: rgba(232,240,250,0.85);
+    margin-bottom: 1.8rem;
+  }
+  .prose p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    line-height: 0.85; float: left;
+    margin-right: 0.12em; margin-top: 0.05em;
+    color: var(--blue-light);
+  }
+  .prose strong { font-weight: 600; color: var(--paper); }
+  .prose em { font-style: italic; color: var(--blue-pale); }
+
+  .pull-quote {
+    margin: 3.5rem 0; padding: 2.5rem 3rem;
+    border-left: 3px solid var(--blue-light);
+    background: rgba(43,92,230,0.06); position: relative;
+  }
+  .pull-quote::before {
+    content: '\201C'; font-family: 'Playfair Display', serif;
+    font-size: 6rem; color: rgba(43,92,230,0.2);
+    position: absolute; top: -1rem; left: 1rem; line-height: 1;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem !important; font-style: italic;
+    color: var(--paper) !important; line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+  .pull-quote p::first-letter { all: unset !important; }
+
+  /* GOAL ROADMAP */
+  .roadmap {
+    margin: 3rem 0;
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--blue-light), var(--amber), transparent);
+  }
+  .road-item {
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .road-item::before {
+    content: '';
+    position: absolute; left: -2.5rem; top: 0.4rem;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--blue-light);
+    border: 2px solid var(--ink);
+    box-shadow: 0 0 0 1px var(--blue-light);
+  }
+  .road-item.amber-dot::before { background: var(--amber); box-shadow: 0 0 0 1px var(--amber); }
+  .road-horizon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--blue-light);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .road-horizon.amber-h { color: var(--amber); }
+  .road-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--paper);
+    margin-bottom: 0.4rem;
+  }
+  .road-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 300;
+    color: rgba(232,240,250,0.65); line-height: 1.6;
+  }
+
+  /* CLOSING MANIFESTO */
+  .manifesto {
+    background: linear-gradient(135deg, rgba(43,92,230,0.08), rgba(201,151,58,0.06));
+    border: 1px solid rgba(43,92,230,0.15);
+    padding: 4rem;
+    margin: 3rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto::before {
+    content: 'AN';
+    position: absolute; right: 2rem; top: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem; font-weight: 900;
+    color: rgba(43,92,230,0.06);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .manifesto-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--paper);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .manifesto-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300;
+    line-height: 1.85; color: rgba(232,240,250,0.8);
+    margin-bottom: 1.2rem;
+  }
+
+  /* CONTACT FOOTER */
+  .contact-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(43,92,230,0.15);
+    border: 1px solid rgba(43,92,230,0.15);
+    margin: 3rem 0;
+  }
+  .contact-cell {
+    background: var(--ink); padding: 1.5rem 1.8rem;
+  }
+  .contact-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem; color: var(--blue-light);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .contact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; color: var(--paper); word-break: break-all;
+  }
+
+  /* FINAL EPIGRAPH */
+  .epigraph {
+    text-align: center;
+    padding: 6rem 4rem 4rem;
+    border-top: 1px solid rgba(43,92,230,0.1);
+    margin-top: 4rem;
+  }
+  .epigraph-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-style: italic; font-weight: 400;
+    color: rgba(232,240,250,0.7);
+    line-height: 1.5;
+    max-width: 680px; margin: 0 auto;
+  }
+  .epigraph-text em { color: var(--amber); font-style: normal; }
+  .epigraph-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-top: 1.5rem;
+  }
+
+  /* END COLOPHON */
+  .colophon {
+    background: var(--dark);
+    padding: 4rem 6rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(43,92,230,0.1);
+  }
+  .colophon-left {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900; color: var(--paper);
+  }
+  .colophon-left span { color: var(--blue-light); font-style: italic; }
+  .colophon-right {
+    text-align: right;
+  }
+  .colophon-right p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; color: var(--muted);
+    letter-spacing: 0.15em; line-height: 2;
+  }
+  .all-parts {
+    display: flex; gap: 1.5rem; justify-content: flex-end;
+    margin-top: 1rem;
+  }
+  .all-parts a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.1em;
+    transition: color 0.3s;
+  }
+  .all-parts a:hover { color: var(--blue-light); }
+
+  .section-divider {
+    display: flex; align-items: center; gap: 1.5rem; margin: 5rem 0;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(43,92,230,0.3), transparent);
+  }
+
+  .page-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3rem 6rem; border-top: 1px solid rgba(43,92,230,0.15);
+    margin-top: 4rem;
+  }
+  .page-nav-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em;
+  }
+  .page-nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: var(--blue-light); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem; transition: gap 0.3s;
+  }
+  .page-nav a.back { color: var(--muted); }
+  .page-nav a:hover { gap: 0.9rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+  <style>
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+  }
+  * { cursor: none; }
+  .cursor, .cursor-dot { pointer-events: none; z-index: 9999; position: fixed; }
+  .cursor { width: 20px; height: 20px; border: 1px solid var(--gold); border-radius: 50%; transition: transform 0.2s ease, background 0.2s ease; mix-blend-mode: difference; }
+  .cursor-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; z-index: 10000; }
+  .cursor.hover { transform: scale(2.5); background: rgba(201, 151, 58, 0.2); border-color: transparent; }
+  .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 1000; }
+  .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin: 2rem 0; transition: all 0.3s ease; }
+  .glass-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px var(--glass-shadow); transform: translateY(-5px); }
+  .prose p { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .prose p.visible { opacity: 1; transform: translateY(0); }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) { .cursor, .cursor-dot { display: none; } * { cursor: auto !important; } }
+  </style>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+  <div class="scroll-progress"></div>
+
+<nav>
+  <div class="nav-brand">Ariyan Nadeem — The Story</div>
+  <div class="nav-parts">
+    <a href="part1.html">Part I</a>
+    <a href="part2.html">Part II</a>
+    <a href="part3.html">Part III</a>
+    <a href="part4.html">Part IV</a>
+    <a href="part5.html" class="active">Part V</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-center">
+    <div class="part-label">Part Five · The Final Chapter · Pages 9 &amp; 10</div>
+    <h1 class="hero-title">
+      <span class="light">The</span><br>
+      <em>Future</em><br>
+      Belongs
+    </h1>
+    <p class="hero-sub">The goals, the vision, and the enduring legacy being written by a young engineer who chose to begin long before the world expected him to.</p>
+  </div>
+  <div class="hero-horizon"></div>
+  <div class="scroll-hint">
+    <span>The Final Chapter</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<main>
+<!-- PAGE 9 -->
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">09</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page Nine · The Vision</div>
+      <h2 class="chapter-title">Where the Road<br><em>is Leading</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      Every person of ambition carries inside them a map of where they are going, even if the roads are not yet drawn. For Ariyan Nadeem, that map is legible in every choice he has already made — the projects he selected, the certifications he pursued, the technical philosophy he developed. None of it points randomly. All of it points forward, toward a very specific kind of future: that of a globally recognized AI systems engineer who builds infrastructure that actually matters, deployed in real environments, solving problems that real people face.
+    </p>
+
+    <p>
+      His most immediate stated goal, drawn directly from his professional summary, is to secure <strong>remote contract roles</strong> where execution speed and technical precision are the primary currencies. This is a carefully chosen framing. He is not asking to be nurtured. He is not looking for a gentle on-ramp with hand-holding and training wheels. He is advertising his ability to execute — to take a specification and deliver a working system — at a speed and quality level that justifies the trust of a remote engagement. That is an advanced professional offer, and he is making it now.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Seeking remote contract roles where execution speed and technical precision matter. Not internships. Not entry-level onboarding. Delivery."</p>
+    </div>
+
+    <p>
+      Beyond immediate employment, Ariyan's trajectory suggests several longer-horizon goals that, while not stated explicitly, are implied with striking clarity by the pattern of his work. The first is a deepening investment in <em>agentic AI systems</em> — the architecture of AI agents that can plan, coordinate, use tools, and accomplish multi-step goals autonomously. His Google/Kaggle certification in this area, combined with his ORCHAT orchestration framework, marks this as far more than a passing interest. It is the frontier he has chosen to specialize in, and it is one of the fastest-growing and most strategically important areas in all of applied AI.
+    </p>
+  </div>
+
+  <div class="roadmap">
+    <div class="road-item">
+      <div class="road-horizon">Immediate · Now</div>
+      <div class="road-title">Remote Contract Roles in AI Systems Engineering</div>
+      <div class="road-desc">Targeting global clients who need production-ready AI infrastructure built with precision, reliability, and low-latency performance. The portfolio exists. The capability is proven. The pitch is clear.</div>
+    </div>
+    <div class="road-item">
+      <div class="road-horizon">Near-Term · 2026</div>
+      <div class="road-title">Completing Intermediate Science & Formalizing the Foundation</div>
+      <div class="road-desc">October 2026 marks the completion of his college program at Govt. Islamia Associate College — adding a formal academic credential to what is already an impressive independent career, and opening the path to further academic options if chosen.</div>
+    </div>
+    <div class="road-item">
+      <div class="road-horizon">Medium-Term · 2026–2027</div>
+      <div class="road-title">Deep Specialization in Agentic AI & Multi-Agent Systems</div>
+      <div class="road-desc">The trajectory of ORCHAT and the Google/Kaggle AI Agents intensive both point toward a deepening expertise in orchestration frameworks, multi-agent coordination, and autonomous AI pipelines — a field that will define the next five years of enterprise AI deployment.</div>
+    </div>
+    <div class="road-item amber-dot">
+      <div class="road-horizon amber-h">Long-Term · Vision</div>
+      <div class="road-title">Building AI Infrastructure for the Global South</div>
+      <div class="road-desc">Ariyan's entire engineering philosophy — CPU-efficient, edge-deployable, constraint-aware — is perfectly aligned with the needs of emerging markets where cloud infrastructure is expensive or unreliable. The tools he builds today are prototypes of a larger mission: democratizing capable AI for the billions of people who cannot afford the cloud.</div>
+    </div>
+    <div class="road-item amber-dot">
+      <div class="road-horizon amber-h">The Horizon · Aspiration</div>
+      <div class="road-title">Recognized as a Pioneer of Practical, Deployable AI</div>
+      <div class="road-desc">Not as a researcher publishing papers in closed journals, but as a practitioner whose open-source tools, public work, and published systems have genuinely lowered the barrier of entry for the next generation of engineers in Pakistan and beyond.</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      His basic Japanese — still at an early stage — is a telling data point when read alongside his global remote-first orientation. Japan is one of the world's most active markets for AI deployment in manufacturing, robotics, and edge computing — precisely the domains Ariyan has built expertise in. Whether or not Japan is a specific target, the willingness to learn a third language while building a career and completing college simultaneously is a signal about the scale of Ariyan's ambition and his tolerance for parallel difficult tasks.
+    </p>
+
+    <p>
+      There is also a social dimension to his goals that deserves acknowledgment. Pakistan has extraordinary engineering talent — a fact evidenced by the success of Pakistani engineers at the highest levels of global technology companies. But that talent, historically, has been systematically underrecognized at home and underutilized internationally due to structural barriers around visibility, credentialing, and access. Ariyan, by building publicly on GitHub and Hugging Face, by earning internationally recognized certifications from Deloitte, AWS, TATA, and Google, and by targeting remote global markets, is actively working to close that gap — for himself first, and in doing so, creating a template that others can follow.
+    </p>
+  </div>
+</article>
+
+<!-- DIVIDER -->
+<div style="max-width:920px;margin:0 auto;padding:0 3rem;">
+  <div class="section-divider"><span style="color:var(--blue-light);font-size:1.2rem;">✦</span></div>
+</div>
+
+<!-- PAGE 10 -->
+<article class="chapter fade-in">
+  <div class="chapter-header">
+    <div class="chapter-number">10</div>
+    <div class="chapter-info">
+      <div class="chapter-tag">Page Ten · The Legacy</div>
+      <h2 class="chapter-title">The Story That Is<br><em class="amber">Still Being Written</em></h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      We began this story in Lahore, with a young man who decided not to wait. We end it — or rather, pause it, because endings are not yet available — in the same place: a mind in full motion, a portfolio growing in depth and sophistication, a career still in the first chapter of what it will eventually become. Ariyan Nadeem is, at the time of this writing in May 2026, one of the most technically accomplished self-directed young engineers this observer has documented. But the more interesting question is not what he has done. It is what he is becoming.
+    </p>
+
+    <p>
+      Look at the compound rate of his progress. Between July 2025 and January 2026 — six months — he built four production AI systems, earned eight formal certifications from four major international organizations, and completed a Google/Kaggle intensive that culminated in a capstone system demonstrating 97.7% latency reduction. That is not a gradual climb; that is an acceleration. And if the past six months are any indicator of the next six, the next twelve, the next five years, then the trajectory points somewhere remarkable.
+    </p>
+
+    <div class="manifesto">
+      <div class="manifesto-title">What This Story Is Really About</div>
+      <p class="manifesto-text">
+        Ariyan Nadeem's story is not primarily about AI. It is about what becomes possible when a young person refuses to accept that preparation must precede action. It is about the increasingly permeable boundary between learning and doing, between student and practitioner, between aspiring and arriving. It is about the fact that the internet — with its open-source repositories, its Kaggle competitions, its Forage simulations, its Hugging Face model hubs — has created a world where a determined teenager in Lahore can build systems comparable to those built by teams in San Francisco or London.
+      </p>
+      <p class="manifesto-text">
+        And it is, finally, about a specific kind of courage: the courage to begin. Not to announce that you are beginning. Not to plan extensively before beginning. But to simply start building something, today, with the tools and knowledge available right now, and to trust that the gaps will be filled in the process. Ariyan began. He is still beginning. And that is the most powerful thing about him.
+      </p>
+    </div>
+
+    <p>
+      His resume — clean and precise, with every claim backed by a measurable number — reads like a manifesto for a new kind of engineering career. Not a career that follows the prescribed path of institution to institution, credential to credential, rung to rung up a corporate ladder. But a career built from the ground up, entirely on the foundation of actual work, actual systems, actual results. A career that exists because he built it, not because someone handed it to him.
+    </p>
+
+    <p>
+      The certifications — from Google, from Deloitte, from AWS, from TATA — are not the point of the story. They are evidence in an argument that was already being won by the projects themselves. They say: this person does not just know how to build AI systems. He also knows how cybersecurity professionals operate inside Deloitte. He also understands how AWS architects design scalable cloud infrastructure. He also knows how TATA consultants translate data into business insights. He is building, deliberately and methodically, toward the kind of full-spectrum competence that makes someone not merely employable but genuinely invaluable.
+    </p>
+
+    <p>
+      What does Ariyan Nadeem want, ultimately? Based on every signal in his documented work, the answer seems to be this: to build things that work. Real things, for real environments, at real-world scale. <em>Systems that inference at 3ms on constrained hardware. Frameworks that orchestrate AI agents with 16ms startup. Models that detect adversarial inputs before they cause harm. Predictors that explain their own reasoning so that a clinician can trust the output.</em> Things that work not because conditions were perfect, but because the engineer who built them understood the conditions and designed for them anyway.
+    </p>
+
+    <p>
+      That is the story of Ariyan Nadeem, as it stands today. A story of a boy from Lahore who chose the machine — not as an escape from reality, but as the most direct path he could find into the future he was building toward. The story is incomplete. The best chapters have not been written yet. But the beginning is extraordinary, and beginnings, when examined closely, reveal everything about direction.
+    </p>
+
+    <p>
+      The direction is unmistakable. Watch this space.
+    </p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-strip">
+    <div class="contact-cell">
+      <div class="contact-label">Email</div>
+      <div class="contact-value">ariyan.nadeem.01@gmail.com</div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">+92 321 4659149</div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Location</div>
+      <div class="contact-value">Lahore, Pakistan · Remote Available</div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-label">Profiles</div>
+      <div class="contact-value">GitHub · LinkedIn · HuggingFace</div>
+    </div>
+  </div>
+
+  <!-- EPIGRAPH -->
+  <div class="epigraph fade-in">
+    <p class="epigraph-text">
+      "The future is already here —<br>
+      it's just not evenly distributed.<br>
+      <em>Ariyan is one of the people distributing it.</em>"
+    </p>
+    <div class="epigraph-attr">Written May 2026 · Based entirely on verified documents</div>
+  </div>
+</article>
+
+<div class="page-nav">
+  <a href="part4.html" class="back">← Part IV</a>
+  <div class="page-nav-info">Part V of V · Pages 9–10 · The End</div>
+  <a href="part1.html">Read From the Beginning →</a>
+</div>
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="colophon-left">
+    Ariyan <span>Nadeem</span>
+  </div>
+  <div class="colophon-right">
+    <p>AI SYSTEMS ENGINEER · LAHORE, PAKISTAN</p>
+    <p>SELF-EMPLOYED · REMOTE · GLOBAL · NOV 2024 – PRESENT</p>
+    <div class="all-parts">
+      <a href="part1.html">Part I</a>
+      <a href="part2.html">Part II</a>
+      <a href="part3.html">Part III</a>
+      <a href="part4.html">Part IV</a>
+      <a href="part5.html">Part V</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

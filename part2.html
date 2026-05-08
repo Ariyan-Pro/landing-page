@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariyan Nadeem — The Story | Part II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0f0d;
+    --paper: #edf5f0;
+    --gold: #2d7a4f;
+    --gold-light: #5ab87a;
+    --rust: #163d27;
+    --cream: #f0f7f2;
+    --muted: #5a6b60;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor, .cursor-dot { pointer-events: none; z-index: 9999; position: fixed; }
+  .cursor {
+    width: 20px; height: 20px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    transition: transform 0.2s ease, background 0.2s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    z-index: 10000;
+  }
+  .cursor.hover {
+    transform: scale(2.5);
+    background: rgba(45, 122, 79, 0.2);
+    border-color: transparent;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0;
+    width: 0%; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 1000;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,15,13,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(45,122,79,0.2);
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-parts { display: flex; gap: 2rem; }
+  .nav-parts a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+  }
+  .nav-parts a:hover, .nav-parts a.active { color: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(45,122,79,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 60%, rgba(90,184,122,0.12) 0%, transparent 60%),
+      linear-gradient(160deg, #0a0f0d 0%, #0f1a12 50%, #0a0f0d 100%);
+  }
+  .hero-left { position: relative; z-index: 2; max-width: 700px; }
+  .part-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(237,245,240,0.6);
+    margin-top: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .hero-right {
+    position: absolute; right: 6rem; bottom: 6rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+  .timeline-preview {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+  .timeline-item {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(45,122,79,0.3);
+  }
+  .t-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+  .t-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .t-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* ── CHAPTER ── */
+  .chapter {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8rem 3rem;
+  }
+  .chapter-header {
+    display: flex; align-items: flex-start; gap: 3rem;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(45,122,79,0.2);
+  }
+  .chapter-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(45,122,79,0.15);
+    line-height: 1;
+  }
+  .chapter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold-light);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .chapter-title em { font-style: italic; color: var(--gold-light); }
+
+  /* ── PROSE ── */
+  .prose p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(237,245,240,0.85);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .prose p.visible { opacity: 1; transform: translateY(0); }
+  .prose p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    float: left;
+    margin-right: 0.12em;
+    color: var(--gold-light);
+  }
+
+  /* ── GLASS CARD ── */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px var(--glass-shadow);
+    transform: translateY(-5px);
+  }
+
+  /* ── PAGE NAV ── */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    border-top: 1px solid rgba(45,122,79,0.2);
+    margin-top: 4rem;
+  }
+  .page-nav-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+  .page-nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .cursor, .cursor-dot { display: none; }
+    * { cursor: auto !important; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-parts { display: none; }
+    .hero { padding: 0 2rem; }
+    .chapter { padding: 4rem 1.5rem; }
+    .hero-right { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+  <div class="scroll-progress"></div>
+
+  <nav>
+    <div class="nav-brand">Ariyan Nadeem — The Story</div>
+    <div class="nav-parts">
+      <a href="part1.html">Part I</a>
+      <a href="part2.html" class="active">Part II</a>
+      <a href="part3.html">Part III</a>
+      <a href="part4.html">Part IV</a>
+      <a href="part5.html">Part V</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-left">
+      <div class="part-label">Part Two · Pages 3 & 4</div>
+      <h1 class="hero-title">The Architecture<br>of a<br><em>Self-Made Mind</em></h1>
+      <p class="hero-subtitle">How a teenager in Lahore decided to build production AI systems without waiting for the world's permission.</p>
+    </div>
+    <div class="hero-right">
+      <div class="timeline-preview">
+        <div class="timeline-item">
+          <div class="t-date">Sep 2024</div>
+          <div class="t-title">Enrolled at Islamia College</div>
+          <div class="t-desc">Science stream, mathematics focus</div>
+        </div>
+        <div class="timeline-item">
+          <div class="t-date">Oct 2024</div>
+          <div class="t-title">First Production Model</div>
+          <div class="t-desc">Deployed RAG pipeline on CPU</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <article class="chapter fade-in">
+      <div class="chapter-header">
+        <div class="chapter-number">02</div>
+        <div class="chapter-info">
+          <div class="chapter-tag">Page Three · The Decision</div>
+          <h2 class="chapter-title">Choosing the Hard Path<br><em>Before It Was Cool</em></h2>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>While his peers were memorizing formulas for exams, Ariyan was reading research papers on transformer architectures. While others waited for university labs and corporate resources, he was building production-grade AI systems on a consumer laptop with no GPU.</p>
+        <p>This wasn't rebellion for its own sake. It was necessity transformed into strategy. In a country where access to cutting-edge technology is limited by geography and economics, waiting for permission means waiting forever. So Ariyan chose a different path: become so good they can't ignore you, even from Lahore.</p>
+      </div>
+
+      <div class="glass-card fade-in">
+        <h3 style="font-family: 'Playfair Display'; font-size: 1.3rem; margin-bottom: 1rem;">The Philosophy</h3>
+        <p style="font-family: 'Cormorant Garamond'; font-size: 1.1rem; line-height: 1.7; color: rgba(237,245,240,0.8);">Constraints breed creativity. Limitations force innovation. What others see as obstacles, Ariyan sees as design parameters.</p>
+      </div>
+
+      <div class="prose">
+        <p>The decision to go self-employed wasn't about rejecting education—it was about refusing to let formal timelines dictate his learning velocity. At 17, while most students are just discovering their interests, Ariyan was already shipping code that solved real business problems.</p>
+        <p><strong>He didn't ask for opportunities. He created them.</strong> And in doing so, he discovered something profound: the world rewards those who deliver value, regardless of age, location, or credentials.</p>
+      </div>
+    </article>
+
+    <div class="page-nav">
+      <div class="page-nav-info">Part II of V · Pages 3–4</div>
+      <a href="part3.html">Continue to Part III →</a>
+    </div>
+  </main>
+
+<script>
+  const cursor = document.querySelector('.cursor');
+  const cursorDot = document.querySelector('.cursor-dot');
+  
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  const scrollProgress = document.querySelector('.scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    scrollProgress.style.width = scrolled + '%';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.fade-in, .prose p').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
