@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariyan Nadeem — The Complete Story</title>
+<meta name="description" content="The complete story of Ariyan Nadeem — builder, engineer, and athlete. Ten chapters across five volumes.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:    #060608;
+    --panel:    #111118;
+    --border:   #1e1e2a;
+    --gold:     #c9a84c;
+    --gold-dim: #7a6330;
+    --ash:      #9090a0;
+    --white:    #e8e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Subtle grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.35;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem 5rem;
+    position: relative;
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 35%, #16120a 0%, transparent 65%),
+      var(--black);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 8%; right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: rise 0.9s ease 0.2s both;
+  }
+
+  .hero-name {
+    font-size: clamp(5rem, 18vw, 14rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: rise 1.1s ease 0.4s both;
+  }
+
+  .hero-tagline {
+    margin-top: 2.5rem;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    color: var(--ash);
+    letter-spacing: 0.1em;
+    max-width: 520px;
+    opacity: 0;
+    animation: rise 0.9s ease 0.8s both;
+  }
+
+  .hero-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: rise 0.9s ease 1s both;
+  }
+
+  .hero-meta span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: rise 0.9s ease 1.4s both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── INTRO STRIP ── */
+  .intro-strip {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+  }
+
+  .intro-strip p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--ash);
+    line-height: 1.9;
+  }
+
+  .intro-strip strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* ── VOLUME GRID ── */
+  .volumes-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 2rem 8rem;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .volumes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .volume-card {
+    background: var(--panel);
+    padding: 2.2rem 2rem;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+
+  .volume-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold-dim);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .volume-card:hover { background: #141420; }
+  .volume-card:hover::before { transform: scaleX(1); }
+
+  .vol-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .vol-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .vol-subtitle {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .vol-chapters {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--ash);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .vol-description {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ash);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .vol-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.2s, gap 0.2s;
+  }
+
+  .volume-card:hover .vol-cta {
+    color: var(--gold);
+    gap: 0.9rem;
+  }
+
+  /* ── FACTS BAR ── */
+  .facts-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+  }
+
+  .facts-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .fact-cell {
+    background: var(--panel);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .fact-num {
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .fact-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+    display: block;
+  }
+
+  /* ── DEPLOY NOTE ── */
+  .deploy-note {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .deploy-note h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .deploy-note p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--ash);
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  .file-list {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    list-style: none;
+  }
+
+  .file-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .file-list li:last-child { border-bottom: none; }
+
+  .file-list li::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: var(--ash);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <p class="hero-eyebrow">The Complete Story · 10 Chapters · 5 Volumes</p>
+  <h1 class="hero-name">Ariyan</h1>
+  <p class="hero-tagline">Builder. Engineer. Athlete. A story still being written from Lahore, Pakistan.</p>
+  <div class="hero-meta">
+    <span>Born September 24, 2008</span>
+    <span>Lahore, Pakistan</span>
+    <span>AI Engineer</span>
+    <span>Class 12</span>
+  </div>
+  <p class="scroll-hint">↓ Read the story</p>
+</header>
+
+<!-- ══ INTRO ══ -->
+<section class="intro-strip">
+  <p>
+    This is the documented story of <strong>Ariyan Nadeem</strong> — a seventeen-year-old who
+    taught himself production-grade AI engineering in eighteen months, on a CPU-only laptop,
+    with no mentor and no GPU, in a non-technical household in Lahore. Across ten chapters
+    and five volumes, it covers his origins, his physical journey, his technical projects,
+    his academic choices, his entrepreneurial plans, and the long road still ahead.
+  </p>
+</section>
+
+<!-- ══ FACTS BAR ══ -->
+<div class="facts-bar">
+  <div class="facts-inner">
+    <div class="fact-cell">
+      <span class="fact-num">6+</span>
+      <span class="fact-label">AI Projects Built</span>
+    </div>
+    <div class="fact-cell">
+      <span class="fact-num">9</span>
+      <span class="fact-label">Certifications</span>
+    </div>
+    <div class="fact-cell">
+      <span class="fact-num">16ms</span>
+      <span class="fact-label">ORCHAT Startup</span>
+    </div>
+    <div class="fact-cell">
+      <span class="fact-num">98.3%</span>
+      <span class="fact-label">Adversarial Accuracy</span>
+    </div>
+    <div class="fact-cell">
+      <span class="fact-num">3m25s</span>
+      <span class="fact-label">Plank PR</span>
+    </div>
+    <div class="fact-cell">
+      <span class="fact-num">17</span>
+      <span class="fact-label">Years Old</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VOLUMES ══ -->
+<section class="volumes-section">
+  <p class="section-label">Five Volumes</p>
+
+  <div class="volumes-grid">
+
+    <!-- Vol 1 -->
+    <a class="volume-card" href="ariyan_ch1.html">
+      <span class="vol-number">Volume I of V</span>
+      <h2 class="vol-title">The Origin</h2>
+      <span class="vol-subtitle">Born Into Absence</span>
+      <span class="vol-chapters">Chapters I &amp; II</span>
+      <p class="vol-description">
+        His mother died when he was ten months old. He grew up knowing her only through fragments
+        — family stories, shifted tones, and a name she had already chosen for him. This volume
+        covers his earliest years, the visual impairment he carries in his left eye, and the
+        nine-year wait that preceded everything else.
+      </p>
+      <span class="vol-cta">Read Volume I →</span>
+    </a>
+
+    <!-- Vol 2 -->
+    <a class="volume-card" href="ariyan_ch2.html">
+      <span class="vol-number">Volume II of V</span>
+      <h2 class="vol-title">The Body &amp; The Spark</h2>
+      <span class="vol-subtitle">Self-Taught, Self-Built</span>
+      <span class="vol-chapters">Chapters III &amp; IV</span>
+      <p class="vol-description">
+        While waiting for a computer he didn't yet own, his body was quietly becoming extraordinary.
+        No gym, no coach — wall climbs, handstands, elite grip strength. Then November 10, 2024:
+        a laptop arrived and the nine-year wait was over. What happened in the first three days
+        set the pace for everything after.
+      </p>
+      <span class="vol-cta">Read Volume II →</span>
+    </a>
+
+    <!-- Vol 3 -->
+    <a class="volume-card" href="ariyan_ch3.html">
+      <span class="vol-number">Volume III of V</span>
+      <h2 class="vol-title">The Builder &amp; The Reckoning</h2>
+      <span class="vol-subtitle">Real Projects. Honest Numbers.</span>
+      <span class="vol-chapters">Chapters V &amp; VI</span>
+      <p class="vol-description">
+        Six production-grade AI projects. Nine professional certifications from Google, AWS,
+        Deloitte, and TATA. And a Year 11 aggregate of 42.14% — the honest cost of a
+        calculated tradeoff. This volume documents what he built, what he earned, and
+        what the academic reckoning looked like.
+      </p>
+      <span class="vol-cta">Read Volume III →</span>
+    </a>
+
+    <!-- Vol 4 -->
+    <a class="volume-card" href="ariyan_ch4.html">
+      <span class="vol-number">Volume IV of V</span>
+      <h2 class="vol-title">The Vision &amp; The Plan</h2>
+      <span class="vol-subtitle">Commerce, Scholarships, Independence</span>
+      <span class="vol-chapters">Chapters VII &amp; VIII</span>
+      <p class="vol-description">
+        Three micro-SaaS products targeting the global market. A scholarship pivot from
+        government programmes to holistic admissions at MIT and Harvard. A financial
+        independence target of $18,000 by September 2026. This volume maps the
+        commercial and academic strategy in full.
+      </p>
+      <span class="vol-cta">Read Volume IV →</span>
+    </a>
+
+    <!-- Vol 5 -->
+    <a class="volume-card" href="ariyan_ch5.html">
+      <span class="vol-number">Volume V of V</span>
+      <h2 class="vol-title">Still Becoming</h2>
+      <span class="vol-subtitle">What the Record Shows</span>
+      <span class="vol-chapters">Chapters IX &amp; X</span>
+      <p class="vol-description">
+        The factual record — stripped of framing and ambition — and an honest look at who
+        Ariyan Nadeem actually is at seventeen. The completed preparation, the open questions,
+        and the long road that belongs entirely to him. The final chapter of a story
+        that is very much still in progress.
+      </p>
+      <span class="vol-cta">Read Volume V →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══ DEPLOY NOTE ══ -->
+<section class="deploy-note">
+  <h2>GitHub Pages Deployment</h2>
+  <p>
+    To publish this as a live website, upload all six files below into a single
+    GitHub repository. Then go to <strong style="color:var(--white)">Settings → Pages</strong>,
+    set the source to your main branch and root folder, and GitHub will
+    publish it. The live URL will be:
+    <strong style="color:var(--gold)">https://yourusername.github.io/repo-name</strong>
+  </p>
+  <p>All internal links between chapters use relative paths and will work automatically once deployed.</p>
+
+  <ul class="file-list">
+    <li>index.html &nbsp;<span style="color:var(--ash)">(this hub — your homepage)</span></li>
+    <li>ariyan_ch1.html &nbsp;<span style="color:var(--ash)">(Chapters I &amp; II — Origin)</span></li>
+    <li>ariyan_ch2.html &nbsp;<span style="color:var(--ash)">(Chapters III &amp; IV — Body &amp; Spark)</span></li>
+    <li>ariyan_ch3.html &nbsp;<span style="color:var(--ash)">(Chapters V &amp; VI — Builder &amp; Reckoning)</span></li>
+    <li>ariyan_ch4.html &nbsp;<span style="color:var(--ash)">(Chapters VII &amp; VIII — Vision &amp; Plan)</span></li>
+    <li>ariyan_ch5.html &nbsp;<span style="color:var(--ash)">(Chapters IX &amp; X — Still Becoming)</span></li>
+  </ul>
+
+  <p>
+    No build step, no dependencies, no framework needed. Pure HTML — open any file
+    directly in a browser or serve it from GitHub Pages as-is.
+  </p>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>Ariyan Nadeem · The Complete Story</span>
+  <span>Lahore, Pakistan · 2026</span>
+  <span>Ten Chapters · Five Volumes</span>
+</footer>
+
+</body>
+</html>
