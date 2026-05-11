@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ariyan — Chapter IX & X: The Unfinished Story</title>
+<link rel="stylesheet" href="animations.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #060608; --deep: #0d0d12; --panel: #111118;
+    --border: #1e1e2a; --gold: #c9a84c; --gold-dim: #7a6330;
+    --ash: #9090a0; --white: #e8e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black); color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; line-height: 1.8; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  .masthead {
+    min-height: 60vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 6rem 2rem 5rem;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, #0d0d10 0%, var(--black) 65%);
+    border-bottom: 1px solid var(--border); position: relative;
+  }
+  .masthead::after {
+    content: ''; position: absolute; bottom: 0; left: 10%; right: 10%;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+  .vol-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase;
+    margin-bottom: 2rem; animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .masthead h1 {
+    font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.05;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+  .masthead h1 em { font-style: italic; color: var(--gold); font-weight: 600; }
+  .masthead p {
+    margin-top: 1.5rem; font-size: 1rem; color: var(--ash);
+    font-weight: 300; letter-spacing: 0.06em; max-width: 500px;
+    animation: fadeUp 0.8s ease 0.7s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter { max-width: 820px; margin: 0 auto; padding: 7rem 2rem; }
+  .chapter + .chapter { border-top: 1px solid var(--border); }
+
+  .chapter-number {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1rem; display: block;
+  }
+  .chapter-title { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 300; line-height: 1.1; margin-bottom: 0.5rem; }
+  .chapter-title em { font-style: italic; color: var(--gold); font-weight: 600; }
+  .divider { width: 80px; height: 1px; background: var(--gold-dim); margin: 2rem 0 3rem; }
+
+  p { margin-bottom: 1.6rem; font-size: 1.05rem; font-weight: 300; color: var(--white); }
+  p.lead { font-size: 1.2rem; color: var(--ash); font-style: italic; margin-bottom: 2.5rem; }
+
+  .drop-cap::first-letter {
+    float: left; font-size: 5.5rem; font-weight: 700;
+    line-height: 0.75; margin-right: 0.12em; margin-top: 0.08em;
+    color: var(--gold); font-style: italic;
+  }
+
+  blockquote {
+    margin: 3.5rem 0; padding: 2rem 2.5rem;
+    border-left: 3px solid var(--gold); background: var(--panel); position: relative;
+  }
+  blockquote::before {
+    content: '\201C'; position: absolute; top: -0.4rem; left: 1.5rem;
+    font-size: 5rem; color: var(--gold); opacity: 0.2; line-height: 1;
+  }
+  blockquote p { font-size: 1.25rem; font-style: italic; margin-bottom: 0.5rem; }
+  blockquote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.2em; color: var(--gold-dim);
+    text-transform: uppercase; display: block; margin-top: 0.8rem;
+  }
+
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px; background: var(--border); margin: 3rem 0; border: 1px solid var(--border);
+  }
+  .summary-cell { background: var(--panel); padding: 1.8rem 2rem; }
+  .summary-label {
+    font-family: 'Space Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase;
+    display: block; margin-bottom: 0.7rem;
+  }
+  .summary-text { font-size: 0.95rem; color: var(--white); font-weight: 300; line-height: 1.6; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #1a1408 0%, #0d0d12 100%);
+    border: 1px solid var(--gold-dim);
+    padding: 2rem 2.5rem; margin: 3rem 0; position: relative;
+  }
+  .highlight-box::before {
+    content: attr(data-label); position: absolute; top: -0.6rem; left: 2rem;
+    background: var(--black); padding: 0 0.8rem;
+    font-family: 'Space Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase;
+  }
+  .highlight-box p { margin-bottom: 0.5rem; font-size: 1rem; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+
+  .section-break { text-align: center; margin: 4rem 0; color: var(--gold-dim); letter-spacing: 0.5em; font-size: 0.8rem; }
+
+  /* Final colophon */
+  .colophon {
+    max-width: 820px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .colophon-title {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .colophon-name {
+    font-size: clamp(3rem, 8vw, 6rem); font-weight: 700;
+    font-style: italic; color: var(--white); line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .colophon-dates {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.25em; color: var(--ash);
+  }
+  .colophon-line {
+    width: 80px; height: 1px; background: var(--gold-dim);
+    margin: 2.5rem auto;
+  }
+  .colophon p {
+    font-size: 0.95rem; color: var(--ash); font-weight: 300;
+    max-width: 480px; margin: 0 auto 1rem;
+  }
+
+  .page-nav {
+    max-width: 820px; margin: 0 auto; padding: 3rem 2rem 5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .page-nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.2em; color: var(--gold); text-decoration: none;
+    text-transform: uppercase; transition: opacity 0.2s;
+  }
+  .page-nav a:hover { opacity: 0.7; }
+  .page-nav .center { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--ash); letter-spacing: 0.12em; }
+
+  em { font-style: italic; color: var(--gold); }
+  strong { font-weight: 600; color: var(--white); }
+
+  /* bento stat override */
+  .stat-bento { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; background:var(--border); margin:3rem 0; border:1px solid var(--border); }
+  .stat-bento-cell { background:var(--panel); padding:1.5rem; text-align:center; position:relative; overflow:hidden; transition:background .2s; }
+  .stat-bento-cell:hover { background:#16161f; }
+  .stat-bento-cell::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent); transform:scaleX(0); transition:transform .4s ease; }
+  .stat-bento-cell:hover::after { transform:scaleX(1); }
+
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<div class="custom-cursor"></div>
+<div class="cursor-ring"></div>
+
+<header class="masthead">
+  <div class="hero-shimmer"></div>
+  <p class="vol-label">Volume V of V — The Complete Story of Ariyan Nadeem</p>
+  <h1>Still <em>Becoming</em></h1>
+  <p>Chapters IX &amp; X — What the record shows, and what it does not yet know</p>
+</header>
+
+<!-- ══ CHAPTER IX ══ -->
+<article class="chapter sr">
+  <span class="chapter-number">Chapter IX</span>
+  <h2 class="chapter-title">What the <em>Record Shows</em></h2>
+  <div class="divider"></div>
+
+  <p class="lead">Strip away the framing, the ambition, the philosophy, and the plans. What remains is a factual record — and that record, on its own terms, is genuinely remarkable for a seventeen-year-old.</p>
+
+  <p class="drop-cap">Ariyan Nadeem was born on September 24, 2008, in Lahore, Pakistan. His mother died when he was ten months old. He was raised by his aunt and his father in a non-technical household with limited resources and no digital access for the first sixteen years of his life. He has a significant visual impairment in his left eye. He received his first laptop in November 2024. In the eighteen months that followed, working without a mentor and on hardware without a GPU, he built six production-grade AI engineering projects, earned nine professional certifications from Google, AWS, Deloitte, and TATA, and began teaching himself the commercial and entrepreneurial layer that could turn those technical skills into financial independence.</p>
+
+  <p>That is the factual record. It does not require embellishment.</p>
+
+  <p>The calisthenics record is similarly factual: self-taught since childhood, no gym, no coach. Wall climbs at ten. Wall handstands at thirteen. At seventeen — L-sits approaching 30 seconds, a 3-minute 25-second plank PR, crow-to-headstand transitions, elbow levers, pistol squats, Superman planks, and a grip strength that has retired three 60-kilogram adjustable trainers. A cardiovascular recovery rate that outperforms peers half his age. Flexibility that belongs in a different category entirely.</p>
+
+  <p>The academic record is honest in a different way: distinction at matriculation, a deliberately sacrificed Year 11 aggregate of 42.14%, a maximum achievable final aggregate capped at 71.45%, and a Year 12 that represents his last institutional opportunity to demonstrate that the sacrifice was a choice and not a ceiling.</p>
+
+  <div class="summary-grid">
+    <div class="summary-cell">
+      <span class="summary-label">Technical Foundation</span>
+      <span class="summary-text">LLM integration, RAG pipelines, ChromaDB, n8n workflows, multi-agent orchestration, adversarial ML, edge quantization, voice intelligence. All self-taught. All production-grade. All documented with real performance benchmarks.</span>
+    </div>
+    <div class="summary-cell">
+      <span class="summary-label">Certifications</span>
+      <span class="summary-text">Google (AI Agents), AWS (Solutions Architecture), Deloitte (Technology, Data Analytics, Cyber), TATA (Data Visualisation, GenAI Analytics), Forage (Data Labeling), Mindluster (MIS). Nine credentials across core disciplines.</span>
+    </div>
+    <div class="summary-cell">
+      <span class="summary-label">Physical Record</span>
+      <span class="summary-text">Natural ectomorph, 5'7", 50–52kg. Extraordinary power-to-weight ratio. Advanced calisthenics skills acquired entirely without formal training. Elite cardiovascular recovery. Exceptional flexibility.</span>
+    </div>
+    <div class="summary-cell">
+      <span class="summary-label">Context</span>
+      <span class="summary-text">One working eye. No GPU. No mentor. Non-technical household. Lahore, Pakistan. Zero prior computer access until November 2024. Deceased biological mother. Father's initial skepticism. All of the above surmounted in parallel.</span>
+    </div>
+  </div>
+
+  <p>These facts exist independently of any framework or identity narrative. They are verifiable. The projects have documented benchmarks. The certifications exist on paper. The physical achievements were demonstrated, measured, recorded. Whatever else may be said about Ariyan at seventeen, this much is true without argument: <em>he built real things under genuinely difficult conditions.</em></p>
+
+  <p>He also — and this matters — did it largely alone. There was no technical community around him, no coding bootcamp, no older sibling in the industry who could make introductions or answer questions. When he hit a wall, he debugged it himself. When he bricked hardware, he recovered it himself. When the budget for API calls ran out, he found free tiers and optimised to stay within them. The independence was not a philosophy — it was a practical necessity that became a practiced skill.</p>
+
+  <blockquote class="sr sr-left">
+    <p>Chaos rewards those who don't flinch.</p>
+    <cite>— Ariyan, on navigating technical crises alone</cite>
+  </blockquote>
+
+  <p>This is the part of the story that is finished, or at least documented. The projects are built. The certifications are earned. The seven-night sprint happened. The physical milestones were reached and recorded. The pivot from government scholarships to holistic admissions was made thoughtfully and without self-pity. These chapters are closed.</p>
+
+  <p>What is not yet written is whether it works — whether the commercial products find customers, whether the scholarships come through, whether the Year 12 exams deliver the proof the strategy requires, whether the AI engineering skills that took eighteen months to build translate into the income and opportunities the plan depends on. Those are still open questions.</p>
+
+  <div class="section-break sr">✦ ✦ ✦</div>
+
+  <p>That uncertainty is not a flaw in the story. It is the story. Every ambitious seventeen-year-old is a collection of completed preparation and unresolved future. What distinguishes some of them from others is not the outcome — which has not happened yet — but the quality and honesty of the preparation. By that measure, the record here is solid.</p>
+</article>
+
+<div class="quote-tree">
+  <div class="quote-tree-inner">
+    <div class="qt-trunk"></div>
+    <div class="qt-item">
+      <p class="qt-quote">"One must imagine Sisyphus happy."</p>
+      <p class="qt-attr">Albert Camus <span class="qt-source">— The Myth of Sisyphus</span></p>
+    </div>
+    <div class="qt-item">
+      <p class="qt-quote">"Waste no more time arguing about what a good man should be. Be one."</p>
+      <p class="qt-attr">Marcus Aurelius <span class="qt-source">— Meditations</span></p>
+    </div>
+    <div class="qt-item">
+      <p class="qt-quote">"We suffer more in imagination than in reality."</p>
+      <p class="qt-attr">Seneca <span class="qt-source">— Letters to Lucilius</span></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ CHAPTER X ══ -->
+<article class="chapter sr">
+  <span class="chapter-number">Chapter X</span>
+  <h2 class="chapter-title">The Unfinished <em>Person</em></h2>
+  <div class="divider"></div>
+
+  <p class="lead">A story told at seventeen is necessarily incomplete. The most interesting parts are usually still ahead.</p>
+
+  <p class="drop-cap">There is something worth saying plainly here, at the end of this record: Ariyan Nadeem is seventeen years old. Not eighteen. Not twenty-five. Seventeen. This is not a criticism — it is a clarification that matters for reading everything that came before it fairly.</p>
+
+  <p>The technical skills are real and genuinely impressive. The certifications were earned. The projects work. The physical achievements are documented. The resilience through difficult circumstances — the absent mother, the visual impairment, the hardware constraints, the skeptical household — is not manufactured. These things are true, and they are worth taking seriously.</p>
+
+  <p>At the same time, seventeen is an age of formation. The worldview, the identity, the philosophy — these are all still being built, revised, and tested against reality. The frameworks that feel total and definitive at seventeen rarely survive intact through twenty-five. That is not a failure of character; it is how human development actually works. The things Ariyan believes most firmly about himself right now are almost certainly going to change — some will be confirmed by experience, some will be complicated by it, and some will be quietly discarded when he encounters things that don't fit the model.</p>
+
+  <p>What tends to endure — what actually compounds — is not the philosophy. It is the capability. The ability to learn complex technical stacks fast. The ability to persist under pressure without needing external validation. The ability to recover from failures, hardware and otherwise, without catastrophizing. The physical discipline that built extraordinary calisthenics skills without a single trainer. These are real and transferable.</p>
+
+  <div class="highlight-box" data-label="What is genuinely rare">
+    <p>Teaching yourself production-grade AI engineering in 18 months, on no-GPU hardware, with no mentor, is objectively uncommon at any age. At seventeen, in Lahore, starting from zero hardware access — it is rarer still.</p>
+    <p>Nine professional certifications from Google, AWS, and Deloitte before finishing high school is a genuine differentiator in any application context.</p>
+    <p>Building physical capabilities to an advanced calisthenics level through pure self-direction and curiosity, without ever entering a gym, demonstrates a pattern of self-teaching that applies far beyond fitness.</p>
+    <p>Losing your mother at ten months old, growing up with one working eye, watching your father doubt what you are doing while you do it anyway — and continuing — reflects a real and earned resilience that does not need to be dressed up to be meaningful.</p>
+  </div>
+
+  <p>The road ahead is long and genuinely uncertain. The commercial products have not yet found customers. The scholarship applications have not been submitted. The Year 12 examinations have not been sat. The financial independence goal — $18,000 by September 2026 — has not been reached. The elite university applications have not been written.</p>
+
+  <p>Every one of those outcomes is still open. And every one of them is within reach of the preparation described in these pages — not guaranteed, but reachable. That is a reasonable and honest position to be in at seventeen.</p>
+
+  <p>The father who once said his son was wasting time will, one way or another, understand what was actually happening. The work being done in that room, quietly, for hours at a stretch, was not nothing. It was the systematic construction of a foundation that very few people his age have anywhere in the world, let alone in a non-technical household in Lahore with a CPU-only laptop and one working eye.</p>
+
+  <blockquote class="sr sr-left">
+    <p>I have a dream. I will make it come true. I don't need anyone's permission to start, and I don't need an audience to keep going.</p>
+    <cite>— Ariyan, on self-reliance</cite>
+  </blockquote>
+
+  <p>That sentiment, stripped of any elaborate philosophy around it, is the real engine of everything in these pages. Not a system, not a doctrine, not an identity architecture. Just a young person with genuine gifts and a genuine drive, facing a long list of genuine obstacles, and choosing every single day to keep building.</p>
+
+  <p>The rest is still being written.</p>
+
+  <div class="section-break sr">✦ ✦ ✦</div>
+
+  <p>Born September 24, 2008, Lahore, Pakistan. Mother gone at ten months. One working eye. First laptop, November 2024. Eighteen months of hard, self-directed work. Six projects. Nine certifications. A body trained to elite capability without a coach. Grades that tell one story, a portfolio that tells a very different one.</p>
+
+  <p>He is seventeen. He is building. He has not yet arrived — but he has, undeniably, started.</p>
+
+  <p><em>That is enough for now. The next pages belong to him.</em></p>
+</article>
+
+<!-- ══ COLOPHON ══ -->
+<div class="colophon">
+  <p class="colophon-title">End of Record</p>
+  <p class="colophon-name">Ariyan</p>
+  <p class="colophon-dates">b. September 24, 2008 · Lahore, Pakistan · Story ongoing</p>
+  <div class="colophon-line"></div>
+  <p>This record was compiled in May 2026 from available documentation. All technical benchmarks, certifications, and biographical details are as documented. All future outcomes remain open.</p>
+</div>
+
+<nav class="page-nav sr">
+  <a href="ariyan_ch4.html">← Chapters VII &amp; VIII</a>
+  <span class="center">ARIYAN NADEEM · END OF RECORD</span>
+  <a href="ariyan_ch1.html">Return to start →</a>
+</nav>
+
+<script defer src="animations.js"></script>
+</body>
+</html>
